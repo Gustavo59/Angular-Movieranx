@@ -1,0 +1,13 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.app-name-header {
+  color: #4cb1f5;
+  text-decoration: none;
+}
+
+.menu-toolbar {
+  background-color: #2b2e2e;
+  color: white;
+}

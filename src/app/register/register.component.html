@@ -1,0 +1,60 @@
+<div class="container">
+  <mat-card class="my-card" fxLayout="column" fxLayoutAlign="center center">
+
+    <mat-card-title>
+      <span>Registration</span>
+    </mat-card-title>
+
+    <mat-card-content>
+      <form [formGroup]="userForm" autocomplete="off" (ngSubmit)="onSubmit()" class="my-form">
+        <mat-form-field class="full-width">
+          <mat-label>Nome</mat-label>
+          <input matInput type="text" placeholder="Nome" formControlName="firstName" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Sobrenome</mat-label>
+          <input matInput type="text" placeholder="Sobrenome" formControlName="lastName" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Nome de Usuario</mat-label>
+          <input matInput matTooltip="Mínimo de 3 caracteres" matTooltipPosition="below" type="text"
+            placeholder="Nome de Usuario" formControlName="username" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput #email type="email" placeholder="Email" formControlName="email" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Senha</mat-label>
+          <input matInput matTooltip="Mínimo de 6 caracteres" matTooltipPosition="below" type="password"
+            placeholder="Senha" formControlName="password" required>
+          <div *ngIf="!equalPass">
+            <p>As senhas precisam ser iguais!</p>
+            <p>A senha deve ter pelo menos 6 caracteres!</p>
+          </div>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Confirmar Senha</mat-label>
+          <input matInput matTooltip="Mínimo de 6 caracteres" matTooltipPosition="below" type="password"
+            placeholder="Confirmar Senha" formControlName="confirmPassword" required>
+          <div *ngIf="!equalPass">
+            <p>As senhas precisam ser iguais!</p>
+            <p>A senha deve ter pelo menos 6 caracteres!</p>
+          </div>
+        </mat-form-field>
+
+        <mat-card-actions fxLayoutAlign="center center">
+          <button mat-button mat-raised-button type="submit" color="primary" class="btn-block register-button">
+            Cadastrar
+          </button>
+        </mat-card-actions>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

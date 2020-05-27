@@ -1,0 +1,63 @@
+* {
+  margin: 0.2em;
+  padding: 0.2em;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.my-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+  color: #918e8c;
+}
+
+.my-card {
+  margin-top: 3.8em;
+  background-color: #353838;
+  width: 50%;
+}
+
+.register-button {
+  background-color: #4cb1f5;
+  color: white;
+}
+
+mat-card-title {
+  color: #4cb1f5;
+}
+
+/* Set native placeholder color */
+::placeholder {
+  color: #918e8c;
+}
+
+/* Set Angular Material placeholder color */
+mat-label {
+  color: #918e8c;
+}
+
+/* Set required sybom (*) color */
+::ng-deep .mat-form-field-infix span {
+  color: #4cb1f5;
+}
+
+::ng-deep :focus .mat-form-field-infix span {
+  color: #4cb1f5 !important;
+}
+
+::ng-deep .mat-input-element {
+  caret-color: #918e8c;
+}
+
+/* Set underline animation color */
+::ng-deep .mat-form-field-ripple {
+  background-color: #4cb1f5 !important;
+}
