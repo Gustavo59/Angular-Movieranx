@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   userForm: FormGroup;
   equalPass = true;
+  minLength = true;
   registered = false;
 
   constructor(
@@ -35,7 +36,9 @@ export class RegisterComponent implements OnInit {
   @ViewChild('email') emailElement: ElementRef;
 
   validatePass() {
-    this.equalPass = this.userForm.value.password === this.userForm.value.confirmPass;
+    this.equalPass = this.userForm.value.password === this.userForm.value.confirmPassword;
+
+    this.minLength = this.userForm.value.password.length >= 6 && this.userForm.value.confirmPassword.length >= 6
   }
 
   createUserForm() {
@@ -64,32 +67,36 @@ export class RegisterComponent implements OnInit {
     this.user = this.userForm.value;
     this.user.active = true;
 
-    this.registerService.register(this.user).subscribe(
-      (res: any) => {
-        this.snackbar.open('Cadastro realizado com sucesso!', 'Accept', {
-          duration: 3000,
-          panelClass: ['green-snackbar']
-        });
+    this.validatePass()
 
-        this.login(this.user.username, this.user.password);
-      },
-      (err: any) => {
-        this.loading = false;
-        console.log(err);
+    if (this.equalPass && this.minLength) {
+      this.registerService.register(this.user).subscribe(
+        (res: any) => {
+          this.snackbar.open('Cadastro realizado com sucesso!', 'Accept', {
+            duration: 3000,
+            panelClass: ['green-snackbar']
+          });
 
-        if (err.message === "EMAIL_ALREADY_REGISTERED") {
-          this.snackbar.open('Este email já está cadastrado!', 'Dismiss', {
-            duration: 4000,
-            panelClass: ['red-snackbar']
-          });
-        } else if (err.message === "USERNAME_ALREADY_REGISTERED") {
-          this.snackbar.open('Este nome de usuário já está sendo utilizado!', 'Dismiss', {
-            duration: 4000,
-            panelClass: ['red-snackbar']
-          });
+          this.login(this.user.username, this.user.password);
+        },
+        (err: any) => {
+          this.loading = false;
+          console.log(err);
+
+          if (err.message === "EMAIL_ALREADY_REGISTERED") {
+            this.snackbar.open('Este email já está cadastrado!', 'Dismiss', {
+              duration: 4000,
+              panelClass: ['red-snackbar']
+            });
+          } else if (err.message === "USERNAME_ALREADY_REGISTERED") {
+            this.snackbar.open('Este nome de usuário já está sendo utilizado!', 'Dismiss', {
+              duration: 4000,
+              panelClass: ['red-snackbar']
+            });
+          }
         }
-      }
-    )
+      )
+    }
   }
 
   private login(login: string, password: string) {

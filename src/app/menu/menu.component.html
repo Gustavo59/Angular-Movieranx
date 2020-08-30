@@ -1,9 +1,30 @@
-<mat-toolbar class="menu-toolbar">
-  <mat-toolbar-row>
-    <!--  <span>HOME</span> -->
-    <span><a class="app-name-header" routerLink="/home">Movieranx</a></span>
-    <span class="spacer"></span>
-    <a mat-button routerLink="/login">Login</a>
-    <a mat-button routerLink="/register">Cadastro</a>
-  </mat-toolbar-row>
-</mat-toolbar>
+<nav class="navbar is-transparent has-shadow">
+  <div class="navbar-brand">
+    <div class="navbar-burger burger" #navBurger (click)="toggleNavbar()" data-target="navbarExampleTransparentExample">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <div id="navbarExampleTransparentExample" #navMenu class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="/home">
+        Home
+      </a>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-primary" href="/register">
+            <strong>Cadastro</strong>
+          </a>
+          <a class="button is-light" href="/login">
+            Login
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

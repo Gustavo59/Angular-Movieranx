@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <mat-card class="my-card" fxLayout="column" fxLayoutAlign="center center">
 
     <mat-card-title>
@@ -57,4 +57,90 @@
       </form>
     </mat-card-content>
   </mat-card>
+</div> -->
+
+<div class="container">
+  <div class="columns is-mobile is-centered">
+    <div class="column is-half" id="form_col">
+      <form [formGroup]="userForm" autocomplete="off" (ngSubmit)="onSubmit()" class="my-form">
+        <div class="field">
+          <label class="label">Nome</label>
+          <div class="control">
+            <input class="input" type="text" formControlName="firstName" placeholder="Nome" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Sobrenome</label>
+          <div class="control">
+            <input class="input" type="text" formControlName="lastName" placeholder="Sobrenome" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Nome de Usuario</label>
+          <div class="control has-icons-left">
+            <input class="input" type="text" formControlName="username" placeholder="Nome de Usuario" value="bulma"
+              required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-user"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Email</label>
+          <div class="control has-icons-left">
+            <input class="input" #email type="email" placeholder="Email" formControlName="email" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Senha</label>
+          <p class="control has-icons-left">
+            <input class="input" type="password" placeholder="Senha" formControlName="password" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+          <div *ngIf="!equalPass">
+            <p class="help is-danger">As senhas precisam ser iguais!</p>
+          </div>
+          <div *ngIf="!minLength">
+            <p class="help is-danger">A senha deve ter pelo menos 6 caracteres!</p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Confirmar Senha</label>
+          <p class="control has-icons-left">
+            <input class="input" type="password" placeholder="Confirmar Senha" formControlName="confirmPassword"
+              required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+          <div *ngIf="!equalPass">
+            <p class="help is-danger">As senhas precisam ser iguais!</p>
+          </div>
+          <div *ngIf="!minLength">
+            <p class="help is-danger">A senha deve ter pelo menos 6 caracteres!</p>
+          </div>
+        </div>
+
+        <div class="columns is-mobile is-centered">
+          <div class="column is-3">
+            <div class="field is-grouped">
+              <div class="control">
+                <button type="submit" class="button is-success">Cadastrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

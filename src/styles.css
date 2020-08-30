@@ -3,13 +3,13 @@
 
 /*@import "D:/TCC/bootstrap-4.5.0-dist/css/bootstrap.css";*/
 
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+/* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
 
 html,
 body {
   height: 100%;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background: url(assets/background-image.png);
-  background-size: 100% 100%;
+  /* background: url(assets/background-image.png);
+  background-size: 100% 100%; */
 }
