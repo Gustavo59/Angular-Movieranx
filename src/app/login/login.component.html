@@ -1,20 +1,56 @@
-<mat-toolbar>
-  <span>LOGIN</span>
-</mat-toolbar>
-<mat-card class="my-card">
-  <mat-card-content>
-    <form class="my-form">
-      <mat-form-field class="full-width">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="Email" name="email">
-      </mat-form-field>
-      <mat-form-field class="full-width">
-        <mat-label>Password</mat-label>
-        <input matInput placeholder="Password" name="password">
-      </mat-form-field>
-    </form>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button color="primary">LOGIN</button>
-  </mat-card-actions>
-</mat-card>
+<div class="container">
+  <div class="columns is-mobile is-centered">
+    <div class="column is-half" id="form_col">
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="my-form">
+        <div class="field form-group">
+          <label class="label">Nome de Usuario ou Email</label>
+          <div class="control has-icons-left">
+            <input class="input form-control" #login="ngModel" name="login" [(ngModel)]="user.login" type="text"
+              placeholder="Nome de Usuario ou Email" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-user"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="field form-group">
+          <label class="label">Senha</label>
+          <p class="control has-icons-left">
+            <input class="input form-control" #password="ngModel" name="password" [(ngModel)]="user.password"
+              id="password" type="password" placeholder="Senha" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+        </div>
+
+        <div class="columns is-mobile is-centered">
+          <div class="column is-3">
+            <div class="field is-grouped">
+              <div class="control">
+                <button type="submit form-control" class="button is-success">Login</button>
+              </div>
+              <div class="control">
+                <button type="button" (click)="toRegister()" class="button is-light">Cadastrar-se</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-5">
+    <article class="message is-danger" id="login_error_notification" style="display: none;">
+      <div class="message-header">
+        <p>Error</p>
+        <button class="delete" (click)="hideWarning('login')" aria-label="delete"></button>
+      </div>
+      <div class="message-body">
+        Login ou Senha incorreto!
+      </div>
+    </article>
+  </div>
+</div>

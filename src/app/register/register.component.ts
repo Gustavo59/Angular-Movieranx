@@ -6,7 +6,6 @@ import { AlertService } from '../service/alert.service';
 import { RegisterService } from '../service/register.service';
 import { User } from '../interfaces/user';
 import { SessionService } from '../service/session.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -19,6 +18,7 @@ export class RegisterComponent implements OnInit {
   userForm: FormGroup;
   equalPass = true;
   minLength = true;
+  emailValid = true;
   registered = false;
 
   constructor(
@@ -26,19 +26,64 @@ export class RegisterComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private registerService: RegisterService,
     private alertService: AlertService,
-    private sessionService: SessionService,
-    private snackbar: MatSnackBar
+    private sessionService: SessionService
   ) {
     this.userForm = this.createUserForm();
   }
 
   @Input() user: User = <User>{};
   @ViewChild('email') emailElement: ElementRef;
+  @ViewChild('password') passwordElement: ElementRef;
+  @ViewChild('confirmPassword') confirmPasswordElement: ElementRef;
 
-  validatePass() {
-    this.equalPass = this.userForm.value.password === this.userForm.value.confirmPassword;
+  validateForm() {
 
-    this.minLength = this.userForm.value.password.length >= 6 && this.userForm.value.confirmPassword.length >= 6
+    if (this.userForm.value.password != null) {
+      this.equalPass = this.userForm.value.password === this.userForm.value.confirmPassword;
+
+      if (!this.equalPass) {
+        this.passwordElement.nativeElement.classList.add('is-danger');
+        this.confirmPasswordElement.nativeElement.classList.add('is-danger');
+        this.passwordElement.nativeElement.classList.remove('is-success');
+        this.confirmPasswordElement.nativeElement.classList.remove('is-success');
+      } else {
+        this.passwordElement.nativeElement.classList.remove('is-danger');
+        this.confirmPasswordElement.nativeElement.classList.remove('is-danger');
+        this.passwordElement.nativeElement.classList.add('is-success');
+        this.confirmPasswordElement.nativeElement.classList.add('is-success');
+      }
+
+      this.minLength = this.userForm.value.password.length >= 6 && this.userForm.value.confirmPassword.length >= 6;
+
+      if (!this.minLength) {
+        this.passwordElement.nativeElement.classList.add('is-danger');
+        this.confirmPasswordElement.nativeElement.classList.add('is-danger');
+        this.passwordElement.nativeElement.classList.remove('is-success');
+        this.confirmPasswordElement.nativeElement.classList.remove('is-success');
+      } else {
+        this.passwordElement.nativeElement.classList.remove('is-danger');
+        this.confirmPasswordElement.nativeElement.classList.remove('is-danger');
+        this.passwordElement.nativeElement.classList.add('is-success');
+        this.confirmPasswordElement.nativeElement.classList.add('is-success');
+      }
+    } else {
+      this.passwordElement.nativeElement.classList.add('is-danger');
+      this.confirmPasswordElement.nativeElement.classList.add('is-danger');
+    }
+
+    if (this.userForm.value.email != null) {
+      this.emailValid = this.userForm.get('email').valid;
+
+      if (!this.emailValid) {
+        this.emailElement.nativeElement.classList.remove('is-success');
+        this.emailElement.nativeElement.classList.add('is-danger');
+      } else {
+        this.emailElement.nativeElement.classList.remove('is-danger');
+        this.emailElement.nativeElement.classList.add('is-success');
+      }
+    } else {
+      this.emailElement.nativeElement.classList.add('is-danger');
+    }
   }
 
   createUserForm() {
@@ -62,21 +107,26 @@ export class RegisterComponent implements OnInit {
     this.router.navigate(['']);
   }
 
+  hideWarning(warning) {
+    if (warning == "username") {
+      (document.querySelector('#username_registered_notification') as HTMLElement).style.display = 'none';
+    } else if (warning == "email") {
+      (document.querySelector('#email_registered_notification') as HTMLElement).style.display = 'none';
+    } else if (warning == "login") {
+      (document.querySelector('#login_error_notification') as HTMLElement).style.display = 'none';
+    }
+  }
+
   onSubmit() {
     this.loading = true;
     this.user = this.userForm.value;
     this.user.active = true;
 
-    this.validatePass()
+    this.validateForm()
 
-    if (this.equalPass && this.minLength) {
+    if (this.equalPass && this.minLength && this.userForm.valid) {
       this.registerService.register(this.user).subscribe(
         (res: any) => {
-          this.snackbar.open('Cadastro realizado com sucesso!', 'Accept', {
-            duration: 3000,
-            panelClass: ['green-snackbar']
-          });
-
           this.login(this.user.username, this.user.password);
         },
         (err: any) => {
@@ -84,15 +134,12 @@ export class RegisterComponent implements OnInit {
           console.log(err);
 
           if (err.message === "EMAIL_ALREADY_REGISTERED") {
-            this.snackbar.open('Este email já está cadastrado!', 'Dismiss', {
-              duration: 4000,
-              panelClass: ['red-snackbar']
-            });
+            (document.querySelector('#email_registered_notification') as HTMLElement).style.display = 'block';
+
+            this.emailElement.nativeElement.classList.add('is-danger');
+            this.emailElement.nativeElement.classList.remove('is-success');
           } else if (err.message === "USERNAME_ALREADY_REGISTERED") {
-            this.snackbar.open('Este nome de usuário já está sendo utilizado!', 'Dismiss', {
-              duration: 4000,
-              panelClass: ['red-snackbar']
-            });
+            (document.querySelector('#username_registered_notification') as HTMLElement).style.display = 'block';
           }
         }
       )
@@ -110,10 +157,8 @@ export class RegisterComponent implements OnInit {
         this.loading = false;
         console.log(error);
 
-        this.snackbar.open('Não foi possível realiar o login', 'Dismiss', {
-          duration: 3000,
-          panelClass: ['red-snackbar']
-        });
+        (document.querySelector('#login_error_notification') as HTMLElement).style.display = 'block';
+
         this.router.navigate([''])
       }
     )
