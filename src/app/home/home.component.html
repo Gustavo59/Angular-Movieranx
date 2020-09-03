@@ -1,4 +1,15 @@
 <div class="container">
+  <div class="columns is-mobile is-centered" id="popular_movies_row">
+    <div class="column has-text-centered">
+      <h2>Filmes Populares</h2>
+    </div>
+  </div>
+
   <div class="columns is-mobile is-centered">
+    <div class="column has-text-centered" *ngFor="let filme of filmes">
+      <a>
+        <img src={{filme}}>
+      </a>
+    </div>
   </div>
 </div>

@@ -7,9 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  filmes: any = [];
+
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.getPopularFilmes()
+  }
+
+  getPopularFilmes() {
+    this.filmes = [
+      "../../assets/image-not-found.png",
+      "../../assets/image-not-found.png",
+      "../../assets/image-not-found.png",
+      "../../assets/image-not-found.png",
+      "../../assets/image-not-found.png"
+    ]
   }
 
 }
