@@ -7,7 +7,7 @@
 
   <div class="columns is-mobile is-centered" id="popular_movies_row">
     <div class="column has-text-centered" *ngFor="let filme of filmes">
-      <a>
+      <a href="/movie/{{filme.id}}">
         <img src={{filme.src}} title="{{filme.name}} ({{filme.year}})">
       </a>
       <p id="movie_name"><a>{{filme.name}}</a></p>
