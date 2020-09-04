@@ -17,11 +17,31 @@ export class HomeComponent implements OnInit {
 
   getPopularFilmes() {
     this.filmes = [
-      "../../assets/image-not-found.png",
-      "../../assets/image-not-found.png",
-      "../../assets/image-not-found.png",
-      "../../assets/image-not-found.png",
-      "../../assets/image-not-found.png"
+      {
+        "src": "../../assets/image-not-found.png",
+        "name": "Batman",
+        "year": 2008
+      },
+      {
+        "src": "../../assets/image-not-found.png",
+        "name": "Lord of the Rings",
+        "year": 2001
+      },
+      {
+        "src": "../../assets/image-not-found.png",
+        "name": "Amour",
+        "year": 2012
+      },
+      {
+        "src": "../../assets/image-not-found.png",
+        "name": "Memento",
+        "year": 2000
+      },
+      {
+        "src": "../../assets/image-not-found.png",
+        "name": "Moonlight",
+        "year": 2016
+      }
     ]
   }
 

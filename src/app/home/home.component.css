@@ -2,11 +2,21 @@
   max-width: 100%;
 }
 
-#popular_movies_row {
-  margin-top: 50px;
-}
-
 h2 {
   font-size: 2em;
   font-weight: bold;
+}
+
+#popular_movies_row img:hover {
+  border: 2px solid #00d1b2;
+}
+
+#popular_movies_row #movie_name a {
+  text-decoration: none;
+  font-style: normal;
+  color: black;
+}
+
+#popular_movies_row #movie_name a:hover {
+  color: #00d1b2;
 }
