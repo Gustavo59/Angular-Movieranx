@@ -18,6 +18,8 @@ export class AuthenticationService {
   login(login: string, password: string): Observable<any> {
     const url = `${environment.userBaseUrl}/v1/user/login`;
 
+    console.log("URL LOGIN ", url)
+
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
 

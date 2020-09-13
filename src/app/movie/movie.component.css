@@ -2,3 +2,7 @@
   font-size: 2em;
   margin-top: 15px;
 }
+
+#genres_list {
+  display: inline-flex;
+}

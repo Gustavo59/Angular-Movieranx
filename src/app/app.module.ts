@@ -28,6 +28,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MovieComponent } from './movie/movie.component';
+import { SearchMovieComponent } from './search-movie/search-movie.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MovieComponent } from './movie/movie.component';
     FooterComponent,
     RegisterComponent,
     HomeComponent,
-    MovieComponent
+    MovieComponent,
+    SearchMovieComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,9 @@ import { MovieComponent } from './movie/movie.component';
     MatSidenavModule,
     MatSnackBarModule
   ],
-  providers: [],
+  providers: [
+    SearchMovieComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

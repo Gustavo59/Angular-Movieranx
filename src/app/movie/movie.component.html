@@ -2,14 +2,11 @@
   <div class="columns is-mobile is-centered" style="margin-top: 50px;">
     <div class="column has-text-centered">
       <a>
-        <img src="../../assets/image-not-found.png">
+        <img src="{{posterPath}}">
       </a>
-      <h2 id="movie_name">Nome do Filme</h2>
-      <!-- <div *ngFor="let genero of generos">
-        <p> {{genero}}</p>
-      </div> -->
-      <div>
-        <p> Comédia | Romance</p>
+      <h2 id="movie_name">{{title}}</h2>
+      <div id="genres_list">
+        <p *ngFor="let genero of genres">{{genero.name}} &nbsp;</p>
       </div>
     </div>
   </div>
@@ -33,11 +30,7 @@
   <div class="columns is-mobile is-centered has-text-centered">
     <div class="column is-7">
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non leo neque. Donec laoreet massa non dolor
-        rutrum, eget sodales leo dignissim. Duis ac eleifend nibh. Donec pretium dui sit amet felis sodales consectetur.
-        Nulla facilisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed placerat felis. Vivamus a
-        elit
-        vitae diam hendrerit bibendum quis id massa. Integer at urna nec sem sollicitudin condimentum.
+        {{overview}}
       </p>
     </div>
 
