@@ -10,21 +10,25 @@
       </div>
     </div>
   </div>
-  <div class="columns is-mobile is-centered has-text-centered">
+  <div class="columns is-mobile is-centered has-text-centered" style="margin-bottom: 0;">
     <div class="column is-1">
-      <i class="fas fa-eye" style="font-size: 2em;"></i>
+      <button (click)="watchMovie()" class="button_icon" [ngClass]="watched ? 'watched' : 'icon_default'">
+        <i class="fas fa-eye" id="watched_icon" style="font-size: 2em;"></i>
+      </button>
     </div>
     <div class="column is-1">
-      <i class="far fa-heart" id="heart_icon" style="font-size: 2em;"></i>
+      <button (click)="favoriteMovie()" class="button_icon" [ngClass]="favorited ? 'favorited' : 'icon_default'">
+        <i class="fas fa-heart" id="heart_icon" style="font-size: 2em;"></i>
+      </button>
     </div>
   </div>
   <div class="columns is-mobile is-centered has-text-centered">
-    <div class="column" style="font-size: 2em;">
-      <i class="far fa-star"></i>
-      <i class="far fa-star"></i>
-      <i class="far fa-star"></i>
-      <i class="far fa-star"></i>
-      <i class="far fa-star"></i>
+    <div class="column" style="font-size: 2em; padding-top: 0;">
+      <ngb-rating [(rate)]="currentRate" resettable="true" (rateChange)="rateMovie(currentRate)">
+        <ng-template let-fill="fill" let-index="index">
+          <span class="star" [class.filled]="fill === 100">&#9733;</span>
+        </ng-template>
+      </ngb-rating>
     </div>
   </div>
   <div class="columns is-mobile is-centered has-text-centered">

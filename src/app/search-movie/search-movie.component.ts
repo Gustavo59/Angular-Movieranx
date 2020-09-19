@@ -13,6 +13,7 @@ import { MovieService } from '../service/movie.service';
 export class SearchMovieComponent implements OnInit {
 
   filmes;
+  contador = 1;
 
   constructor(
     private movieService: MovieService,
@@ -33,6 +34,7 @@ export class SearchMovieComponent implements OnInit {
       .subscribe(
         res => {
           this.filmes = res;
+          this.contador = 2;
           console.log(this.filmes)
         }, error => {
           console.log(error);
