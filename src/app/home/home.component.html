@@ -8,9 +8,9 @@
   <div class="columns is-mobile is-centered" id="popular_movies_row">
     <div class="column has-text-centered" *ngFor="let filme of filmes">
       <a>
-        <img src={{filme.src}} title="{{filme.name}} ({{filme.year}})">
+        <img [src]="'http://image.tmdb.org/t/p/w200'+filme.poster_path" title="{{filme.title}} ({{filme.year}})">
       </a>
-      <p id="movie_name"><a>{{filme.name}}</a></p>
+      <p id="movie_name"><a>{{filme.title}}</a></p>
     </div>
   </div>
 </div>
