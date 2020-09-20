@@ -30,6 +30,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MovieComponent } from './movie/movie.component';
 import { SearchMovieComponent } from './search-movie/search-movie.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RegisterComponent,
     HomeComponent,
     MovieComponent,
-    SearchMovieComponent
+    SearchMovieComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -17,6 +17,7 @@ export class MenuComponent implements OnInit {
   public isLogged: boolean;
 
   movieName: string = '';
+  username: string;
 
   constructor(
     public authenticationService: AuthenticationService,
@@ -40,6 +41,7 @@ export class MenuComponent implements OnInit {
 
   userIsLogged() {
     if (this.sessionService.getUserLogged() != null) {
+      this.username = localStorage.getItem("username")
       return true;
     }
     return false;

@@ -11,7 +11,7 @@ export class SessionService {
   constructor(private route: Router) { }
 
   getUserLogged() {
-    const userId = localStorage.getItem('user');
+    const userId = localStorage.getItem('userId');
 
     if (!this.userId) {
       this.userId = userId;
@@ -21,11 +21,11 @@ export class SessionService {
   }
 
   saveUserLoggedId(userId: string, username?: string) {
-    localStorage.setItem('user', userId)
+    localStorage.setItem('userId', userId)
 
     if (username != null) {
       this.username = username;
-      localStorage.setItem('name', username);
+      localStorage.setItem('username', username);
     }
 
     this.userId = userId;

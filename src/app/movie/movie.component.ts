@@ -73,7 +73,7 @@ export class MovieComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userMovies.userId = localStorage.getItem("user");
+    this.userMovies.userId = localStorage.getItem("userId");
     this.userMovies.movieId = this.route.snapshot.paramMap.get('id');
 
     this.userMovies.rating = 0
@@ -88,7 +88,7 @@ export class MovieComponent implements OnInit {
           this.overview = res.overview
           this.posterPath = "https://image.tmdb.org/t/p/w200" + res.poster_path
 
-          this.userMoviesService.getUserMovieRating(localStorage.getItem("user"), this.userMovies.movieId)
+          this.userMoviesService.getUserMovieRating(localStorage.getItem("userId"), this.userMovies.movieId)
             .subscribe(
               res => {
                 if (res != null) {

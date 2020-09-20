@@ -1,14 +1,15 @@
 <div class="container">
   <div class="columns is-mobile is-centered" style="margin-top: 50px;">
     <div class="column has-text-centered">
-      <h2>Filmes Populares</h2>
+      <h2>Popular Comedy Movies</h2>
     </div>
   </div>
 
   <div class="columns is-mobile is-centered" id="popular_movies_row">
     <div class="column has-text-centered" *ngFor="let filme of filmes">
       <a [routerLink]="['/movie', filme.id]">
-        <img [src]="'http://image.tmdb.org/t/p/w200'+filme.poster_path" title="{{filme.original_title}} ({{filme.year}})">
+        <img [src]="'http://image.tmdb.org/t/p/w200'+filme.poster_path"
+          title="{{filme.original_title}} ({{filme.year}})">
       </a>
       <p id="movie_name"><a [routerLink]="['/movie', filme.id]">{{filme.original_title}}</a></p>
     </div>

@@ -6,6 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { MovieComponent } from './movie/movie.component';
 import { SearchMovieComponent } from './search-movie/search-movie.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'movie/:id', component: MovieComponent },
   { path: 'search', component: SearchMovieComponent },
+  { path: ':username/profile/edit', component: EditProfileComponent },
   { path: '**', component: ErrorComponent }
 ];
 

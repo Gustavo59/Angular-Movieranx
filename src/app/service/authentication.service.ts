@@ -36,7 +36,7 @@ export class AuthenticationService {
   }
 
   getUserData(login: string): Observable<any> {
-    const url = `${environment.userBaseUrl}/v1/user/findById/${this.session.userId}`;
+    const url = `${environment.userBaseUrl}/v1/user/findbyid/${this.session.userId}`;
     return this.http.get<User>(url);
   }
 }

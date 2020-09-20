@@ -1,9 +1,26 @@
 .navbar-start a.navbar-item {
   color: #00d1b2;
   font-weight: bold;
+  text-decoration: none;
 }
 
 #searchMovieInputDiv {
   width: 30%;
   margin-top: 10px;
+}
+
+#user_dropdown a {
+  text-decoration: none;
+}
+
+#user_dropdown a.navbar-link:hover {
+  color: #00d1b2 !important;
+}
+
+#user_dropdown a.navbar-item:hover {
+  background-color: #00d1b263 !important;
+}
+
+.navbar-link:not(.is-arrowless)::after {
+  border-color: #00d1b2 !important;
 }
