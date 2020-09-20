@@ -23,9 +23,9 @@ export class SessionService {
   saveUserLoggedId(userId: string, username?: string) {
     localStorage.setItem('user', userId)
 
-    if (name != null) {
+    if (username != null) {
       this.username = username;
-      localStorage.setItem('name', name);
+      localStorage.setItem('name', username);
     }
 
     this.userId = userId;

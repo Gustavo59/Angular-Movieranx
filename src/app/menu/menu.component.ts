@@ -1,7 +1,9 @@
-import { Component, ViewChild, OnInit, ElementRef } from '@angular/core';
+import { Component, ViewChild, OnInit, ElementRef, Output, EventEmitter } from '@angular/core';
 import { AuthenticationService } from '../service/authentication.service';
 import { SessionService } from '../service/session.service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { SearchMovieComponent } from '../search-movie/search-movie.component';
 
 @Component({
   selector: 'app-menu',
@@ -14,14 +16,21 @@ export class MenuComponent implements OnInit {
 
   public isLogged: boolean;
 
+  movieName: string = '';
+
   constructor(
     public authenticationService: AuthenticationService,
     private sessionService: SessionService,
-    private route: Router
+    private route: Router,
+    private searchMovieComponent: SearchMovieComponent
   ) { }
 
   ngOnInit() {
     this.isLogged = this.userIsLogged();
+  }
+
+  searchMovie(searchMovieForm: NgForm) {
+    this.searchMovieComponent.serchMovie(searchMovieForm.value.movieName);
   }
 
   toggleNavbar() {

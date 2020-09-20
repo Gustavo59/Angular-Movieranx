@@ -14,16 +14,27 @@
       </a>
     </div>
 
+    <div id="searchMovieInputDiv">
+      <form #searchMovieForm="ngForm" (ngSubmit)="searchMovie(searchMovieForm)" class="my-form">
+        <div class="control has-icons-right">
+          <input class="input form-control" #movieName="ngModel" ngModel name="movieName" type="text" required>
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+      </form>
+    </div>
+
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-          <a class="button is-primary" *ngIf="!isLogged" href="/register">
+          <a class="button is-primary" *ngIf="!userIsLogged()" href="/register">
             <strong>Cadastro</strong>
           </a>
-          <a class="button is-light" *ngIf="!isLogged" href="/login">
+          <a class="button is-light" *ngIf="!userIsLogged()" href="/login">
             Login
           </a>
-          <button type="button" *ngIf="isLogged" (click)="logout()" class="button is-primary">Logout</button>
+          <button type="button" *ngIf="userIsLogged()" (click)="logout()" class="button is-primary">Logout</button>
         </div>
       </div>
     </div>
