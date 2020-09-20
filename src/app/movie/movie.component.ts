@@ -81,6 +81,8 @@ export class MovieComponent implements OnInit {
     this.movieService.getMovieData(this.userMovies.movieId)
       .subscribe(
         res => {
+          console.log()
+
           this.title = res.original_title
           this.genres = res.genres
           this.overview = res.overview

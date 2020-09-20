@@ -5,4 +5,5 @@ export interface Movie {
     release_date: string;
     revenue: string;
     genres: string;
+    poster_path:string
 }

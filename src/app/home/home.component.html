@@ -7,10 +7,10 @@
 
   <div class="columns is-mobile is-centered" id="popular_movies_row">
     <div class="column has-text-centered" *ngFor="let filme of filmes">
-      <a>
-        <img [src]="'http://image.tmdb.org/t/p/w200'+filme.poster_path" title="{{filme.title}} ({{filme.year}})">
+      <a [routerLink]="['/movie', filme.id]">
+        <img [src]="'http://image.tmdb.org/t/p/w200'+filme.poster_path" title="{{filme.original_title}} ({{filme.year}})">
       </a>
-      <p id="movie_name"><a>{{filme.title}}</a></p>
+      <p id="movie_name"><a [routerLink]="['/movie', filme.id]">{{filme.original_title}}</a></p>
     </div>
   </div>
 </div>

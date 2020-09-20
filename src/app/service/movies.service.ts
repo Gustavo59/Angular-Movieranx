@@ -11,7 +11,7 @@ export class MoviesService {
   constructor(private http: HttpClient) { }
 
   getPopularMoviesByGenre(genre:string){
-    const url = `${environment.userBaseUrl}v1/movie/getTopMoviesByGenre/`+genre;
+    const url = `${environment.movieBaseUrl}v1/movie/getTopMoviesByGenre/`+genre;
     return this.http.get<Movie[]>(url)
   }
 }
