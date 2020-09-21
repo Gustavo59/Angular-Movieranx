@@ -31,6 +31,8 @@ import { MovieComponent } from './movie/movie.component';
 import { SearchMovieComponent } from './search-movie/search-movie.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { UserMoviesComponent } from './user-movies/user-movies.component';
+import { NgxPaginationModule } from 'ngx-pagination'
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     HomeComponent,
     MovieComponent,
     SearchMovieComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    UserMoviesComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +70,8 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     FlexLayoutModule,
     MatSidenavModule,
     MatSnackBarModule,
-    NgbModule
+    NgbModule,
+    NgxPaginationModule
   ],
   providers: [
     SearchMovieComponent

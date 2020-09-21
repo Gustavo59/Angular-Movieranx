@@ -43,6 +43,12 @@ export class UserMoviesService {
     return this.http.delete<UserMovies>(url)
   }
 
+  getAllWatchedMovies(userId: string): Observable<any> {
+    const url = `${environment.userMoviesBaseUrl}/v1/user/movies/findwatchedmovies/${userId}`
+
+    return this.http.get<Array<UserMovies>>(url)
+  }
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

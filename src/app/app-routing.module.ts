@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { MovieComponent } from './movie/movie.component';
 import { SearchMovieComponent } from './search-movie/search-movie.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { UserMoviesComponent } from './user-movies/user-movies.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'movie/:id', component: MovieComponent },
   { path: 'search', component: SearchMovieComponent },
   { path: ':username/profile/edit', component: EditProfileComponent },
+  { path: ':username/movies', component: UserMoviesComponent },
   { path: '**', component: ErrorComponent }
 ];
 
