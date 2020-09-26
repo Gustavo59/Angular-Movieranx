@@ -19,6 +19,7 @@ export class RegisterComponent implements OnInit {
   equalPass = true;
   minLength = true;
   emailValid = true;
+  usernameValid = true;
   registered = false;
 
   constructor(
@@ -35,56 +36,9 @@ export class RegisterComponent implements OnInit {
   @ViewChild('email') emailElement: ElementRef;
   @ViewChild('password') passwordElement: ElementRef;
   @ViewChild('confirmPassword') confirmPasswordElement: ElementRef;
-
-  validateForm() {
-
-    if (this.userForm.value.password != null) {
-      this.equalPass = this.userForm.value.password === this.userForm.value.confirmPassword;
-
-      if (!this.equalPass) {
-        this.passwordElement.nativeElement.classList.add('is-danger');
-        this.confirmPasswordElement.nativeElement.classList.add('is-danger');
-        this.passwordElement.nativeElement.classList.remove('is-success');
-        this.confirmPasswordElement.nativeElement.classList.remove('is-success');
-      } else {
-        this.passwordElement.nativeElement.classList.remove('is-danger');
-        this.confirmPasswordElement.nativeElement.classList.remove('is-danger');
-        this.passwordElement.nativeElement.classList.add('is-success');
-        this.confirmPasswordElement.nativeElement.classList.add('is-success');
-      }
-
-      this.minLength = this.userForm.value.password.length >= 6 && this.userForm.value.confirmPassword.length >= 6;
-
-      if (!this.minLength) {
-        this.passwordElement.nativeElement.classList.add('is-danger');
-        this.confirmPasswordElement.nativeElement.classList.add('is-danger');
-        this.passwordElement.nativeElement.classList.remove('is-success');
-        this.confirmPasswordElement.nativeElement.classList.remove('is-success');
-      } else {
-        this.passwordElement.nativeElement.classList.remove('is-danger');
-        this.confirmPasswordElement.nativeElement.classList.remove('is-danger');
-        this.passwordElement.nativeElement.classList.add('is-success');
-        this.confirmPasswordElement.nativeElement.classList.add('is-success');
-      }
-    } else {
-      this.passwordElement.nativeElement.classList.add('is-danger');
-      this.confirmPasswordElement.nativeElement.classList.add('is-danger');
-    }
-
-    if (this.userForm.value.email != null) {
-      this.emailValid = this.userForm.get('email').valid;
-
-      if (!this.emailValid) {
-        this.emailElement.nativeElement.classList.remove('is-success');
-        this.emailElement.nativeElement.classList.add('is-danger');
-      } else {
-        this.emailElement.nativeElement.classList.remove('is-danger');
-        this.emailElement.nativeElement.classList.add('is-success');
-      }
-    } else {
-      this.emailElement.nativeElement.classList.add('is-danger');
-    }
-  }
+  @ViewChild('username') usernameElement: ElementRef;
+  @ViewChild('firstName') firstNameElement: ElementRef;
+  @ViewChild('lastName') lastNameElement: ElementRef;
 
   createUserForm() {
     return new FormGroup({
@@ -162,6 +116,95 @@ export class RegisterComponent implements OnInit {
         this.router.navigate([''])
       }
     )
+  }
+
+  validateForm() {
+
+    if (this.userForm.value.password != null) {
+      this.equalPass = this.userForm.value.password === this.userForm.value.confirmPassword;
+
+      if (!this.equalPass) {
+        this.passwordElement.nativeElement.classList.add('is-danger');
+        this.confirmPasswordElement.nativeElement.classList.add('is-danger');
+        this.passwordElement.nativeElement.classList.remove('is-success');
+        this.confirmPasswordElement.nativeElement.classList.remove('is-success');
+      } else {
+        this.passwordElement.nativeElement.classList.remove('is-danger');
+        this.confirmPasswordElement.nativeElement.classList.remove('is-danger');
+        this.passwordElement.nativeElement.classList.add('is-success');
+        this.confirmPasswordElement.nativeElement.classList.add('is-success');
+      }
+
+      this.minLength = this.userForm.value.password.length >= 6 && this.userForm.value.confirmPassword.length >= 6;
+
+      if (!this.minLength) {
+        this.passwordElement.nativeElement.classList.add('is-danger');
+        this.confirmPasswordElement.nativeElement.classList.add('is-danger');
+        this.passwordElement.nativeElement.classList.remove('is-success');
+        this.confirmPasswordElement.nativeElement.classList.remove('is-success');
+      } else {
+        this.passwordElement.nativeElement.classList.remove('is-danger');
+        this.confirmPasswordElement.nativeElement.classList.remove('is-danger');
+        this.passwordElement.nativeElement.classList.add('is-success');
+        this.confirmPasswordElement.nativeElement.classList.add('is-success');
+      }
+    } else {
+      this.passwordElement.nativeElement.classList.add('is-danger');
+      this.confirmPasswordElement.nativeElement.classList.add('is-danger');
+    }
+
+    if (this.userForm.value.email != null) {
+      this.emailValid = this.userForm.get('email').valid;
+
+      if (!this.emailValid) {
+        this.emailElement.nativeElement.classList.remove('is-success');
+        this.emailElement.nativeElement.classList.add('is-danger');
+      } else {
+        this.emailElement.nativeElement.classList.remove('is-danger');
+        this.emailElement.nativeElement.classList.add('is-success');
+      }
+    } else {
+      this.emailElement.nativeElement.classList.add('is-danger');
+    }
+
+    if (this.userForm.value.username != null) {
+      if (!this.userForm.value.username.valid) {
+        this.usernameValid = false;
+
+        this.usernameElement.nativeElement.classList.remove('is-danger');
+        this.usernameElement.nativeElement.classList.add('is-success');
+      } else {
+        this.usernameValid = true;
+        this.usernameElement.nativeElement.classList.remove('is-success');
+        this.usernameElement.nativeElement.classList.add('is-danger');
+      }
+    } else {
+      this.usernameElement.nativeElement.classList.add('is-danger');
+    }
+
+    if (this.userForm.value.firstName != null) {
+      if (!this.userForm.value.firstName.valid) {
+        this.firstNameElement.nativeElement.classList.remove('is-danger');
+        this.firstNameElement.nativeElement.classList.add('is-success');
+      } else {
+        this.firstNameElement.nativeElement.classList.remove('is-success');
+        this.firstNameElement.nativeElement.classList.add('is-danger');
+      }
+    } else {
+      this.firstNameElement.nativeElement.classList.add('is-danger');
+    }
+
+    if (this.userForm.value.lastName != null) {
+      if (!this.userForm.value.lastName.valid) {
+        this.lastNameElement.nativeElement.classList.remove('is-danger');
+        this.lastNameElement.nativeElement.classList.add('is-success');
+      } else {
+        this.lastNameElement.nativeElement.classList.remove('is-success');
+        this.lastNameElement.nativeElement.classList.add('is-danger');
+      }
+    } else {
+      this.lastNameElement.nativeElement.classList.add('is-danger');
+    }
   }
 
 }
