@@ -13,6 +13,8 @@ import * as $ from 'jquery';
 export class UserMoviesComponent implements OnInit {
 
   filmes: Movie[] = [];
+  page = 1;
+  pageSize = 16;
   username = localStorage.getItem("username");
 
   constructor(
