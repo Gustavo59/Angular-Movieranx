@@ -20,8 +20,8 @@ export class RouteGuardService implements CanActivate {
     return true;
   }
 
-  canAccess(): boolean {
-    if (!this.auth.isSameUser()) {
+  canAccess(userNamePath): boolean {
+    if (!this.auth.isSameUser(userNamePath)) {
       this.router.navigate(['home']);
       return false;
     }

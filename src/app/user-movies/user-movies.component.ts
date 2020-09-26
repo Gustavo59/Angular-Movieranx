@@ -33,7 +33,8 @@ export class UserMoviesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.routeGuard.canAccess()
+    console.log(this.route.snapshot.paramMap.get('username'))
+    this.routeGuard.canAccess(this.route.snapshot.paramMap.get('username'))
 
     this.userMoviesService.getAllWatchedMovies(this.session.userId)
       .subscribe(

@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { User } from '../interfaces/user';
 import { AuthenticationService } from '../service/authentication.service';
 import { ProfileService } from '../service/profile.service';
@@ -25,7 +26,8 @@ export class EditProfileComponent implements OnInit {
     private profileService: ProfileService,
     private authenticationService: AuthenticationService,
     private session: SessionService,
-    private routeGuard: RouteGuardService
+    private routeGuard: RouteGuardService,
+    private route: ActivatedRoute
   ) {
   }
 
@@ -35,7 +37,7 @@ export class EditProfileComponent implements OnInit {
   @ViewChild('confirmPassword') confirmPasswordElement: ElementRef;
 
   ngOnInit() {
-    this.routeGuard.canAccess()
+    this.routeGuard.canAccess(this.route.snapshot.paramMap.get('username'))
 
     this.authenticationService.getUserData(this.session.userId)
       .subscribe(data => {

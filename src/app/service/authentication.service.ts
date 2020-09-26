@@ -16,7 +16,8 @@ export class AuthenticationService {
   constructor(
     private http: HttpClient,
     private session: SessionService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   public isAuthenticated(): boolean {
@@ -31,10 +32,9 @@ export class AuthenticationService {
     }
   }
 
-  public isSameUser(): boolean {
+  public isSameUser(userNamePath): boolean {
     const userName = localStorage.getItem('username');
 
-    const userNamePath = this.route.snapshot.paramMap.get('username')
     // Check whether the user is logged or not
     // true or false
     if (userName == userNamePath) {
