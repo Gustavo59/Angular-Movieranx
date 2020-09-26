@@ -3,6 +3,7 @@ import { MovieService } from '../service/movie.service';
 import { UserMoviesService } from '../service/user-movies.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserMovies } from '../interfaces/userMovies';
+import { RouteGuardService } from '../service/route-guard.service';
 
 @Component({
   selector: 'app-movie',
@@ -23,53 +24,65 @@ export class MovieComponent implements OnInit {
   constructor(
     private movieService: MovieService,
     private route: ActivatedRoute,
-    private userMoviesService: UserMoviesService
+    private userMoviesService: UserMoviesService,
+    private routeGuard: RouteGuardService
   ) {
   }
 
   watchMovie() {
-    if (this.watched) {
-      this.watched = false
-      this.userMovies.favorite = false
-      this.userMovies.rating = 0
+    var canActivate = this.routeGuard.canActivate()
 
-      this.deleteMovieRating()
-    } else {
-      this.watched = true
-
-      this.sendMovieRate()
-    }
-  }
-
-  favoriteMovie() {
-    if (this.userMovies.favorite) {
-      this.userMovies.favorite = false
-
-      this.updateMovieRating()
-    } else {
-      this.userMovies.favorite = true
-
+    if (canActivate) {
       if (this.watched) {
-        this.updateMovieRating()
+        this.watched = false
+        this.userMovies.favorite = false
+        this.userMovies.rating = 0
+
+        this.deleteMovieRating()
       } else {
         this.watched = true
 
         this.sendMovieRate()
       }
+    }
 
+  }
+
+  favoriteMovie() {
+    var canActivate = this.routeGuard.canActivate()
+
+    if (canActivate) {
+      if (this.userMovies.favorite) {
+        this.userMovies.favorite = false
+
+        this.updateMovieRating()
+      } else {
+        this.userMovies.favorite = true
+
+        if (this.watched) {
+          this.updateMovieRating()
+        } else {
+          this.watched = true
+
+          this.sendMovieRate()
+        }
+      }
     }
   }
 
   rateMovie() {
-    if (this.watched) {
-      this.updateMovieRating()
+    var canActivate = this.routeGuard.canActivate()
 
-    } else {
-      this.watched = true
+    if (canActivate) {
+      if (this.watched) {
+        this.updateMovieRating()
 
-      this.sendMovieRate()
+      } else {
+        this.watched = true
+
+        this.sendMovieRate()
+      }
     }
-
   }
 
   ngOnInit() {
@@ -81,8 +94,6 @@ export class MovieComponent implements OnInit {
     this.movieService.getMovieData(this.userMovies.movieId)
       .subscribe(
         res => {
-          console.log()
-
           this.title = res.original_title
           this.genres = res.genres
           this.overview = res.overview
@@ -113,7 +124,6 @@ export class MovieComponent implements OnInit {
     ).subscribe(
       res => {
         this.userMovies.id = res.id
-        console.log(res)
       }, error => {
         console.log(error)
       }
@@ -126,7 +136,6 @@ export class MovieComponent implements OnInit {
       this.userMovies.id
     ).subscribe(
       res => {
-        console.log(res)
       }, error => {
         console.log(error)
       }

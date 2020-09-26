@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../interfaces/user';
 import { AuthenticationService } from '../service/authentication.service';
 import { ProfileService } from '../service/profile.service';
+import { RouteGuardService } from '../service/route-guard.service';
 import { SessionService } from '../service/session.service';
 
 @Component({
@@ -23,7 +24,8 @@ export class EditProfileComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private authenticationService: AuthenticationService,
-    private session: SessionService
+    private session: SessionService,
+    private routeGuard: RouteGuardService
   ) {
   }
 
@@ -33,11 +35,12 @@ export class EditProfileComponent implements OnInit {
   @ViewChild('confirmPassword') confirmPasswordElement: ElementRef;
 
   ngOnInit() {
+    this.routeGuard.canAccess()
+
     this.authenticationService.getUserData(this.session.userId)
       .subscribe(data => {
         this.user = data;
         this.loaded = true;
-        console.log("DATA", data)
       });
 
     this.userForm = this.createUserForm();
@@ -55,8 +58,6 @@ export class EditProfileComponent implements OnInit {
   }
 
   validateForm() {
-
-    console.log("USERFORM: ", this.userForm)
 
     if (this.userForm.value.password != null) {
       this.equalPass = this.userForm.value.password === this.userForm.value.confirmPassword;

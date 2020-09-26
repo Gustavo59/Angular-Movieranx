@@ -4,6 +4,9 @@ import { SessionService } from './session.service';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../interfaces/user';
+import { isNull } from '@angular/compiler/src/output/output_ast';
+import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +15,37 @@ export class AuthenticationService {
 
   constructor(
     private http: HttpClient,
-    private session: SessionService
+    private session: SessionService,
+    private route: ActivatedRoute
   ) { }
+
+  public isAuthenticated(): boolean {
+    const user = localStorage.getItem('userId');
+
+    // Check whether the user is logged or not
+    // true or false
+    if (user != null) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  public isSameUser(): boolean {
+    const userName = localStorage.getItem('username');
+
+    const userNamePath = this.route.snapshot.paramMap.get('username')
+    // Check whether the user is logged or not
+    // true or false
+    if (userName == userNamePath) {
+      return true
+    } else {
+      return false
+    }
+  }
 
   login(login: string, password: string): Observable<any> {
     const url = `${environment.userBaseUrl}/v1/user/login`;
-
-    console.log("URL LOGIN ", url)
 
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
