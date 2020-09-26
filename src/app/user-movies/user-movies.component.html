@@ -13,13 +13,28 @@
           <img class="poster-image" width="150px" [src]="'http://image.tmdb.org/t/p/w200'+filme.poster_path"
             title="{{filme.original_title}} ({{filme.release_date.slice(0,4)}})">
 
-          <ngb-rating style="margin-left: 25px;" [(rate)]="ratings[i]" [readonly]="true" [max]="5">
-            <ng-template let-fill="fill" let-index="index">
-              <span class="star" [class.full]="fill === 100">
-                <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
-              </span>
-            </ng-template>
-          </ngb-rating>
+          <div>
+            <i *ngIf="favorited[i]" class="fas fa-heart" id="heart_icon"
+              style="font-size: 1.3rem; margin-left: 10px; color: red;"></i>
+
+            <ngb-rating *ngIf="!favorited[i]" style="margin-left: 25px;" [(rate)]="ratings[i]" [readonly]="true"
+              [max]="5">
+              <ng-template let-fill="fill" let-index="index">
+                <span class="star" [class.full]="fill === 100">
+                  <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                </span>
+              </ng-template>
+            </ngb-rating>
+
+            <ngb-rating *ngIf="favorited[i]" style="margin-left: 7px;" [(rate)]="ratings[i]" [readonly]="true"
+              [max]="5">
+              <ng-template let-fill="fill" let-index="index">
+                <span class="star" [class.full]="fill === 100">
+                  <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                </span>
+              </ng-template>
+            </ngb-rating>
+          </div>
         </a>
       </li>
     </ul>

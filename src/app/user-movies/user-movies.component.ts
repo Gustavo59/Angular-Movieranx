@@ -17,6 +17,7 @@ export class UserMoviesComponent implements OnInit {
 
   filmes: Movie[] = [];
   ratings = [];
+  favorited = [];
   page = 1;
   pageSize = 16;
   username = this.route.snapshot.paramMap.get('username');
@@ -43,11 +44,23 @@ export class UserMoviesComponent implements OnInit {
             p.movieId
           ));
 
-          var moviesRatings = res.map(p => (
+          this.ratings = res.map(p => (
             (p.rating / 2)
           ));
 
-          this.ratings = moviesRatings;
+          this.favorited = res.map(p => (
+            p.favorite
+          ));
+
+          // this.favorited = res.map(function (p) {
+          //   if (p.favorite) {
+          //     return 1
+          //   } else {
+          //     return 0
+          //   }
+          // })
+
+          console.log(this.favorited)
 
           this.moviesService.getAllWatchedMovies(moviesId)
             .subscribe(
