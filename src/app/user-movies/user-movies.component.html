@@ -8,17 +8,26 @@
   <div class="columns is-mobile is-centered" id="popular_movies_row" style="margin-top: 20px;">
     <ul class="poster-list">
       <li class="poster-container"
-        *ngFor="let filme of filmes | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+        *ngFor="let i = index; let filme of filmes | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
         <a [routerLink]="['/movie', filme.id]">
           <img class="poster-image" width="150px" [src]="'http://image.tmdb.org/t/p/w200'+filme.poster_path"
             title="{{filme.original_title}} ({{filme.release_date.slice(0,4)}})">
+
+          <ngb-rating style="margin-left: 25px;" [(rate)]="ratings[i]" [readonly]="true" [max]="5">
+            <ng-template let-fill="fill" let-index="index">
+              <span class="star" [class.full]="fill === 100">
+                <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+              </span>
+            </ng-template>
+          </ngb-rating>
         </a>
       </li>
     </ul>
   </div>
 
   <div class="columns is-mobile is-centered">
-    <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="filmes.length" [boundaryLinks]="true">
+    <ngb-pagination [(page)]="page" [pageSize]="pageSize" [maxSize]="10" [collectionSize]="filmes.length"
+      [boundaryLinks]="true">
     </ngb-pagination>
   </div>
 

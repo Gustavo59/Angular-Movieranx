@@ -31,6 +31,24 @@ ngb-pagination ::ng-deep .page-item.disabled .page-link {
   color: #6c757d !important;
 }
 
+.star {
+  position: relative;
+  display: inline-block;
+  font-size: 1.5rem;
+  color: #d3d3d3;
+}
+
+.full {
+  color: #00d1b2;
+}
+
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  color: #00d1b2;
+}
+
 
 /* .poster-list::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);

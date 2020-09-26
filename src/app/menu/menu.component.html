@@ -28,7 +28,7 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div *ngIf="userIsLogged()" class="navbar-item has-dropdown is-hoverable" id="user_dropdown">
-          <a class="navbar-link" [routerLink]="[username, 'profile']">
+          <a class="navbar-link">
             <i class="fas fa-user" style="margin-right: 10px;"></i>
             {{username}}
           </a>
