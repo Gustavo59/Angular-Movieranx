@@ -1,7 +1,7 @@
 <div class="container">
   <div class="columns is-mobile is-centered">
     <div class="column" id="form_col">
-      <form [formGroup]="userForm" autocomplete="off" (ngSubmit)="onSubmit()" class="my-form">
+      <form [formGroup]="userForm" #firstName autocomplete="off" (ngSubmit)="onSubmit()" class="my-form">
         <div class="field form-group">
           <label class="label">Nome</label>
           <div class="control">
@@ -13,7 +13,7 @@
         <div class="field form-group">
           <label class="label">Sobrenome</label>
           <div class="control">
-            <input class="input form-control" type="text" [ngModel]="user.lastName" formControlName="lastName"
+            <input class="input form-control" #lastName type="text" [ngModel]="user.lastName" formControlName="lastName"
               placeholder="Sobrenome" required>
           </div>
         </div>
@@ -21,11 +21,14 @@
         <div class="field form-group">
           <label class="label">Nome de Usuario</label>
           <div class="control has-icons-left">
-            <input class="input form-control" type="text" [ngModel]="user.username" formControlName="username"
+            <input class="input form-control" #username type="text" [ngModel]="user.username" formControlName="username"
               placeholder="Nome de Usuario" required>
             <span class="icon is-small is-left">
               <i class="fas fa-user"></i>
             </span>
+            <div *ngIf="!usernameValid">
+              <p class="help is-danger">Username must have more than 3 characters!</p>
+            </div>
           </div>
         </div>
 

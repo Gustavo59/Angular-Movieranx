@@ -19,6 +19,7 @@ export class EditProfileComponent implements OnInit {
   equalPass = true;
   minLength = true;
   emailValid = true;
+  usernameValid = true;
   registered = false;
   loaded = false;
 
@@ -35,6 +36,9 @@ export class EditProfileComponent implements OnInit {
   @ViewChild('email') emailElement: ElementRef;
   @ViewChild('password') passwordElement: ElementRef;
   @ViewChild('confirmPassword') confirmPasswordElement: ElementRef;
+  @ViewChild('username') usernameElement: ElementRef;
+  @ViewChild('firstName') firstNameElement: ElementRef;
+  @ViewChild('lastName') lastNameElement: ElementRef;
 
   ngOnInit() {
     this.routeGuard.canAccess(this.route.snapshot.paramMap.get('username'))
@@ -106,6 +110,47 @@ export class EditProfileComponent implements OnInit {
       }
     } else {
       this.emailElement.nativeElement.classList.add('is-danger');
+    }
+
+    if (this.userForm.value.username != null) {
+      if (!this.userForm.controls.username.valid) {
+        this.usernameValid = false;
+
+        this.usernameElement.nativeElement.classList.remove('is-success');
+        this.usernameElement.nativeElement.classList.add('is-danger');
+
+      } else {
+        this.usernameValid = true;
+
+        this.usernameElement.nativeElement.classList.remove('is-danger');
+        this.usernameElement.nativeElement.classList.add('is-success');
+      }
+    } else {
+      this.usernameElement.nativeElement.classList.add('is-danger');
+    }
+
+    if (this.userForm.value.firstName != null) {
+      if (!this.userForm.controls.firstName.valid) {
+        this.firstNameElement.nativeElement.classList.remove('is-success');
+        this.firstNameElement.nativeElement.classList.add('is-danger');
+      } else {
+        this.firstNameElement.nativeElement.classList.remove('is-danger');
+        this.firstNameElement.nativeElement.classList.add('is-success');
+      }
+    } else {
+      this.firstNameElement.nativeElement.classList.add('is-danger');
+    }
+
+    if (this.userForm.value.lastName != null) {
+      if (!this.userForm.controls.lastName.valid) {
+        this.lastNameElement.nativeElement.classList.remove('is-success');
+        this.lastNameElement.nativeElement.classList.add('is-danger');
+      } else {
+        this.lastNameElement.nativeElement.classList.remove('is-danger');
+        this.lastNameElement.nativeElement.classList.add('is-success');
+      }
+    } else {
+      this.lastNameElement.nativeElement.classList.add('is-danger');
     }
   }
 

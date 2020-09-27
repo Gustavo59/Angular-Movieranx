@@ -120,6 +120,8 @@ export class RegisterComponent implements OnInit {
 
   validateForm() {
 
+    console.log(this.userForm)
+
     if (this.userForm.value.password != null) {
       this.equalPass = this.userForm.value.password === this.userForm.value.confirmPassword;
 
@@ -168,39 +170,40 @@ export class RegisterComponent implements OnInit {
     }
 
     if (this.userForm.value.username != null) {
-      if (!this.userForm.value.username.valid) {
+      if (!this.userForm.controls.username.valid) {
         this.usernameValid = false;
+
+        this.usernameElement.nativeElement.classList.remove('is-success');
+        this.usernameElement.nativeElement.classList.add('is-danger');
+      } else {
+        this.usernameValid = true;
 
         this.usernameElement.nativeElement.classList.remove('is-danger');
         this.usernameElement.nativeElement.classList.add('is-success');
-      } else {
-        this.usernameValid = true;
-        this.usernameElement.nativeElement.classList.remove('is-success');
-        this.usernameElement.nativeElement.classList.add('is-danger');
       }
     } else {
       this.usernameElement.nativeElement.classList.add('is-danger');
     }
 
     if (this.userForm.value.firstName != null) {
-      if (!this.userForm.value.firstName.valid) {
-        this.firstNameElement.nativeElement.classList.remove('is-danger');
-        this.firstNameElement.nativeElement.classList.add('is-success');
-      } else {
+      if (!this.userForm.controls.firstName.valid) {
         this.firstNameElement.nativeElement.classList.remove('is-success');
         this.firstNameElement.nativeElement.classList.add('is-danger');
+      } else {
+        this.firstNameElement.nativeElement.classList.remove('is-danger');
+        this.firstNameElement.nativeElement.classList.add('is-success');
       }
     } else {
       this.firstNameElement.nativeElement.classList.add('is-danger');
     }
 
     if (this.userForm.value.lastName != null) {
-      if (!this.userForm.value.lastName.valid) {
-        this.lastNameElement.nativeElement.classList.remove('is-danger');
-        this.lastNameElement.nativeElement.classList.add('is-success');
-      } else {
+      if (!this.userForm.controls.lastName.valid) {
         this.lastNameElement.nativeElement.classList.remove('is-success');
         this.lastNameElement.nativeElement.classList.add('is-danger');
+      } else {
+        this.lastNameElement.nativeElement.classList.remove('is-danger');
+        this.lastNameElement.nativeElement.classList.add('is-success');
       }
     } else {
       this.lastNameElement.nativeElement.classList.add('is-danger');
