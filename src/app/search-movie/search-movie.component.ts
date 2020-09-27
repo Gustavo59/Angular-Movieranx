@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Movie } from '../interfaces/movie';
-import { MovieService } from '../service/movie.service';
+import { MoviesService } from '../service/movies.service';
 
 @Component({
   selector: 'app-search-movie',
@@ -12,11 +12,11 @@ import { MovieService } from '../service/movie.service';
 })
 export class SearchMovieComponent implements OnInit {
 
-  filmes;
-  contador = 1;
+  filmes:Movie[] = null;
+  filmesEmiiter$ = new BehaviorSubject<Movie[]>(this.filmes);
 
   constructor(
-    private movieService: MovieService,
+    private moviesService: MoviesService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -25,20 +25,21 @@ export class SearchMovieComponent implements OnInit {
   ngOnInit() {
   }
 
-  serchMovie(name) {
+  serchMovie(term) {
+    console.log("searching")
     this.router.navigate(['search'])
 
-    name = name.replace(/ /g, "-")
+    term = term.replace(/ /g, "-")
+    console.log(term)
+    this.moviesService.findMoviesByTerm(term).subscribe(resp=>{
+      console.log(resp)
 
-    this.movieService.searchMoviesByName(name)
-      .subscribe(
-        res => {
-          this.filmes = res;
-          this.contador = 2;
-          console.log(this.filmes)
-        }, error => {
-          console.log(error);
-        }
-      )
+      for(let filme of resp){
+        console.log(filme.original_title)
+      }
+      this.filmes = resp
+      this.filmesEmiiter$.next(this.filmes)
+    })
+
   }
 }

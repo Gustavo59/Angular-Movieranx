@@ -19,8 +19,5 @@ export class MovieService {
     return this.http.get<Movie>(url);
   }
 
-  searchMoviesByName(name: string): Observable<any> {
-    const url = `${environment.movieBaseUrl}/v1/movie/findbyname/${name}`;
-    return this.http.get<Array<Movie>>(url);
-  }
+
 }

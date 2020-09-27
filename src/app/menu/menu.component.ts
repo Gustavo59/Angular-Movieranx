@@ -30,7 +30,7 @@ export class MenuComponent implements OnInit {
   }
 
   searchMovie(searchMovieForm: NgForm) {
-    this.searchMovieComponent.serchMovie(searchMovieForm.value.movieName);
+      this.searchMovieComponent.serchMovie(searchMovieForm.value.movieName);
   }
 
   toggleNavbar() {
