@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { Movie } from '../interfaces/movie';
 import { MoviesService } from '../service/movies.service';
 import { UserMoviesService } from '../service/user-movies.service';
@@ -21,8 +21,26 @@ export class UserMoviesComponent implements OnInit {
   page = 1;
   pageSize = 16;
   username = this.route.snapshot.paramMap.get('username');
+  public innerWidth: any;
 
-  currentRate = 3.5;
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+    console.log(this.innerWidth)
+    if (this.innerWidth <= 1600 && this.innerWidth >= 1410) {
+      this.pageSize = 16;
+    } else if (this.innerWidth < 1025 && this.innerWidth >= 992) {
+      this.pageSize = 10;
+    } else if (this.innerWidth < 992 && this.innerWidth >= 768) {
+      this.pageSize = 18;
+    } else if (this.innerWidth < 768 && this.innerWidth >= 425) {
+      this.pageSize = 16;
+    } else if (this.innerWidth < 425 && this.innerWidth >= 375) {
+      this.pageSize = 16;
+    } else if (this.innerWidth < 375) {
+      this.pageSize = 12;
+    }
+  }
 
   constructor(
     private moviesService: MoviesService,
@@ -34,7 +52,8 @@ export class UserMoviesComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.route.snapshot.paramMap.get('username'))
+    this.innerWidth = window.innerWidth;
+
     this.routeGuard.canAccess(this.route.snapshot.paramMap.get('username'))
 
     this.userMoviesService.getAllWatchedMovies(this.session.userId)
@@ -52,20 +71,19 @@ export class UserMoviesComponent implements OnInit {
             p.favorite
           ));
 
-          // this.favorited = res.map(function (p) {
-          //   if (p.favorite) {
-          //     return 1
-          //   } else {
-          //     return 0
-          //   }
-          // })
-
           console.log(this.favorited)
 
           this.moviesService.getAllWatchedMovies(moviesId)
             .subscribe(
               res => {
-                this.filmes = res
+                for (let index = 0; index < 5; index++) {
+                  for (let index = 0; index < res.length; index++) {
+                    this.filmes.push(res[index])
+
+                  }
+
+                }
+                // this.filmes = res
               }, error => {
                 console.log(error)
               }

@@ -2,21 +2,29 @@
   <div class="columns is-mobile is-centered" style="margin-top: 50px;">
     <div class="column has-text-centered">
       <a>
-        <img src="{{posterPath}}">
+        <img id="movie_poster" src="{{posterPath}}">
       </a>
-      <h2 id="movie_name">{{title}}</h2>
+
+      <div id="movie_name_div">
+        <h2 id="movie_name">{{title}} <span id="release_year">{{year}}</span></h2>
+      </div>
+
       <div id="genres_list">
-        <p *ngFor="let genero of genres">{{genero.name}} &nbsp;</p>
+        <div *ngFor="let genero of genres; let i = index">
+          <p *ngIf="i != (genres.length - 1)">{{genero.name}} <i class="fas fa-circle"
+              style="font-size: 0.5em; margin: 0 10px 3px 10px;"></i> &nbsp;</p>
+          <p *ngIf="i == (genres.length - 1)">{{genero.name}} &nbsp;</p>
+        </div>
       </div>
     </div>
   </div>
   <div class="columns is-mobile is-centered has-text-centered" style="margin-bottom: 0;">
-    <div class="column is-1">
+    <div class="column is-6" style="text-align: end; margin-right: 20px;">
       <button (click)="watchMovie()" class="button_icon" [ngClass]="watched ? 'watched' : 'icon_default'">
         <i class="fas fa-eye" id="watched_icon" style="font-size: 2em;"></i>
       </button>
     </div>
-    <div class="column is-1">
+    <div class="column is-6" style="text-align: start; margin-left: 20px;">
       <button (click)="favoriteMovie()" class="button_icon"
         [ngClass]="userMovies.favorite ? 'favorite' : 'icon_default'">
         <i class="fas fa-heart" id="heart_icon" style="font-size: 2em;"></i>

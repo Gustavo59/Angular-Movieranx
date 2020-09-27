@@ -1,10 +1,28 @@
+#movie_poster {
+  border-radius: 12px;
+}
+
 #movie_name {
   font-size: 2em;
   margin-top: 15px;
 }
 
+#movie_name_div {
+  display: flex;
+  justify-content: center;
+}
+
+#movie_name_div #release_year {
+  font-size: 0.5em;
+  font-style: italic;
+  color: #adaaaa;
+}
+
 #genres_list {
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
+  justify-content: center;
 }
 
 .star {
@@ -41,4 +59,27 @@
 
 .icon_default {
   color: lightgray;
+}
+
+@media only screen and (max-width: 500px) {
+  .star {
+    font-size: 2rem;
+  }
+
+  #movie_name {
+    font-size: 1.5em;
+  }
+
+  #movie_name_div #release_year {
+    margin-top: 20px;
+    margin-left: 10px;
+  }
+
+  #genres_list {
+    font-size: 0.8em;
+  }
+
+  #movie_poster {
+    width: 150px;
+  }
 }
