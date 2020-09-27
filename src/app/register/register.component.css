@@ -1,3 +1,18 @@
 #form_col {
   margin-top: 20px;
 }
+
+#form_col .form-group {
+  width: 50%;
+  margin: auto;
+}
+
+@media only screen and (max-width: 770px) {
+  /* #update_btn_div {
+    width: 80%;
+  } */
+
+  #form_col .form-group {
+    width: 80%;
+  }
+}
