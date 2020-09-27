@@ -1,6 +1,6 @@
 <div class="container">
   <div class="columns is-mobile is-centered">
-    <div class="column is-half" id="form_col">
+    <div class="column" id="form_col">
       <form [formGroup]="userForm" autocomplete="off" (ngSubmit)="onSubmit()" class="my-form">
         <div class="field form-group">
           <label class="label">Nome</label>
@@ -77,13 +77,10 @@
           </div>
         </div>
 
-        <div class="columns is-mobile is-centered">
-          <div class="column is-3">
-            <div class="field is-grouped">
-              <div class="control">
-                <button type="submit form-control" class="button is-success">Atualizar</button>
-              </div>
-            </div>
+        <div class="columns is-mobile is-centered" id="update_btn_div"
+          style="width: 50%; margin: auto; text-align: center;">
+          <div class="column">
+            <button type="submit form-control" class="button is-success">Atualizar</button>
           </div>
         </div>
       </form>

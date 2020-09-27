@@ -1,28 +1,32 @@
-<nav class="navbar is-transparent has-shadow">
+<nav class="navbar is-transparent has-shadow" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <div class="navbar-burger burger" #navBurger (click)="toggleNavbar()" data-target="navbarExampleTransparentExample">
+    <a class="navbar-item" [routerLink]="['/home']">
+      Home
+    </a>
+
+    <a role="button" aria-label="menu" aria-expanded="false" class="navbar-burger burger" #navBurger
+      (click)="toggleNavbar()" data-target="navbarExampleTransparentExample">
       <span></span>
       <span></span>
       <span></span>
-    </div>
+    </a>
   </div>
 
   <div id="navbarExampleTransparentExample" #navMenu class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item" [routerLink]="['/home']">
-        Home
-      </a>
-    </div>
 
-    <div id="searchMovieInputDiv">
-      <form #searchMovieForm="ngForm" (ngSubmit)="searchMovie(searchMovieForm)" class="my-form">
-        <div class="control has-icons-right">
-          <input class="input form-control" #movieName="ngModel" ngModel name="movieName" type="text" required>
-          <span class="icon is-small is-right">
-            <i class="fas fa-search"></i>
-          </span>
+    <div class="columns is-mobile is-centered has-text-centered" style="margin-bottom: 0; margin-left: auto;">
+      <div class="column" style="text-align: end; margin-right: 20px;">
+        <div id="searchMovieInputDiv">
+          <form #searchMovieForm="ngForm" (ngSubmit)="searchMovie(searchMovieForm)" class="my-form">
+            <div class="control has-icons-right">
+              <input class="input form-control" #movieName="ngModel" ngModel name="movieName" type="text" required>
+              <span class="icon is-small is-right">
+                <i class="fas fa-search"></i>
+              </span>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
 
     <div class="navbar-end">

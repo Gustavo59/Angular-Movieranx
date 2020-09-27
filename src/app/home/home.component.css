@@ -7,6 +7,15 @@ h2 {
   font-weight: bold;
 }
 
+#popular_movies_row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#popular_movies_row img {
+  min-width: 115px;
+}
+
 #popular_movies_row img:hover {
   border: 2px solid #00d1b2;
 }
@@ -19,4 +28,10 @@ h2 {
 
 #popular_movies_row #movie_name a:hover {
   color: #00d1b2;
+}
+
+@media only screen and (max-width: 700px) {
+  #popular_movies_row img {
+    max-width: 115px;
+  }
 }
