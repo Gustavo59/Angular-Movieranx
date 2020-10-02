@@ -31,8 +31,9 @@ import { MovieComponent } from './movie/movie.component';
 import { SearchMovieComponent } from './search-movie/search-movie.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
-import { UserMoviesComponent } from './user-movies/user-movies.component';
-import { NgxPaginationModule } from 'ngx-pagination'
+import { WatchedMoviesComponent } from './watched-movies/watched-movies.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { SavedMoviesComponent } from './saved-movies/saved-movies.component'
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { NgxPaginationModule } from 'ngx-pagination'
     MovieComponent,
     SearchMovieComponent,
     EditProfileComponent,
-    UserMoviesComponent
+    WatchedMoviesComponent,
+    SavedMoviesComponent
   ],
   imports: [
     BrowserModule,

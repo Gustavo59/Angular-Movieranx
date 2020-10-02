@@ -50,6 +50,14 @@
   color: greenyellow;
 }
 
+#save_icon:hover {
+  color: #2E89FF;
+}
+
+.saved {
+  color: #2E89FF;
+}
+
 .button_icon {
   background: transparent;
   box-shadow: 0px 0px 0px transparent;

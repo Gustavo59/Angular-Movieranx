@@ -1,7 +1,7 @@
 <div class="container">
   <div class="columns is-mobile is-centered" id="user_movies_header" style="margin-top: 20px;">
     <div class="column has-text-centered">
-      <h2 style="font-weight: bold; font-size: 2em;">{{username}}'s Movies</h2>
+      <h2 style="font-weight: bold; font-size: 2em;">{{username}}'s Saved Movies</h2>
     </div>
   </div>
 
@@ -14,7 +14,8 @@
             title="{{filme.original_title}} ({{filme.release_date.slice(0,4)}})">
 
           <div style="display: inline-flex;">
-            <ngb-rating style="margin-left: 25px;" [(rate)]="ratings[i]" [readonly]="true" [max]="5">
+            <ngb-rating style="margin-left: 25px;" *ngIf="ratings[i] != 0" [(rate)]="ratings[i]" [readonly]="true"
+              [max]="5">
               <ng-template let-fill="fill" let-index="index">
                 <span class="star" [class.full]="fill === 100">
                   <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;

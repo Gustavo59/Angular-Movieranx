@@ -41,8 +41,11 @@
             <a class="navbar-item" [routerLink]="[username, 'profile', 'edit']">
               Edit Profile
             </a>
-            <a class="navbar-item" [routerLink]="[username, 'movies']">
-              Movies
+            <a class="navbar-item" [routerLink]="[username, 'movies', 'watched']">
+              Watched Movies
+            </a>
+            <a class="navbar-item" [routerLink]="[username, 'movies', 'saved']">
+              Saved Movies
             </a>
             <hr class="navbar-divider">
             <a class="navbar-item" (click)="logout()">

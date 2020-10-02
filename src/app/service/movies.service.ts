@@ -17,8 +17,8 @@ export class MoviesService {
     return this.http.get<Movie[]>(url)
   }
 
-  getAllWatchedMovies(movies: string[]) {
-    const url = `${environment.movieBaseUrl}/v1/movie/getwatchedmovies?movies=${movies}`;
+  getAllMoviesById(movies: string[]) {
+    const url = `${environment.movieBaseUrl}/v1/movie/getmoviesbyid?movies=${movies}`;
 
     return this.http.get<Movie[]>(url)
   }

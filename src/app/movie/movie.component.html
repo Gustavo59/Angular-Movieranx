@@ -19,15 +19,20 @@
     </div>
   </div>
   <div class="columns is-mobile is-centered has-text-centered" style="margin-bottom: 0;">
-    <div class="column is-6" style="text-align: end; margin-right: 20px;">
-      <button (click)="watchMovie()" class="button_icon" [ngClass]="watched ? 'watched' : 'icon_default'">
+    <div class="column is-4" style="text-align: end;max-width: 130px;">
+      <button (click)="watchMovie()" class="button_icon" [ngClass]="userMovies.watched ? 'watched' : 'icon_default'">
         <i class="fas fa-eye" id="watched_icon" style="font-size: 2em;"></i>
       </button>
     </div>
-    <div class="column is-6" style="text-align: start; margin-left: 20px;">
+    <div class="column is-4" style="max-width: 130px;">
       <button (click)="favoriteMovie()" class="button_icon"
         [ngClass]="userMovies.favorite ? 'favorite' : 'icon_default'">
         <i class="fas fa-heart" id="heart_icon" style="font-size: 2em;"></i>
+      </button>
+    </div>
+    <div class="column is-4" style="text-align: start; max-width: 130px;">
+      <button (click)="saveMovie()" class="button_icon" [ngClass]="userMovies.saved ? 'saved' : 'icon_default'">
+        <i class="fas fa-bookmark" id="save_icon" style="font-size: 2em;"></i>
       </button>
     </div>
   </div>

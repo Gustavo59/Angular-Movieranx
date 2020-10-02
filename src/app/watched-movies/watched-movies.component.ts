@@ -10,10 +10,10 @@ import { RouteGuardService } from '../service/route-guard.service';
 
 @Component({
   selector: 'app-user-movies',
-  templateUrl: './user-movies.component.html',
-  styleUrls: ['./user-movies.component.css']
+  templateUrl: './watched-movies.component.html',
+  styleUrls: ['./watched-movies.component.css']
 })
-export class UserMoviesComponent implements OnInit {
+export class WatchedMoviesComponent implements OnInit {
 
   filmes: Movie[] = [];
   ratings = [];
@@ -71,19 +71,10 @@ export class UserMoviesComponent implements OnInit {
             p.favorite
           ));
 
-          console.log(this.favorited)
-
-          this.moviesService.getAllWatchedMovies(moviesId)
+          this.moviesService.getAllMoviesById(moviesId)
             .subscribe(
               res => {
-                for (let index = 0; index < 5; index++) {
-                  for (let index = 0; index < res.length; index++) {
-                    this.filmes.push(res[index])
-
-                  }
-
-                }
-                // this.filmes = res
+                this.filmes = res
               }, error => {
                 console.log(error)
               }

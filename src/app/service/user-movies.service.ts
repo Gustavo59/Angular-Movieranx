@@ -49,6 +49,11 @@ export class UserMoviesService {
     return this.http.get<Array<UserMovies>>(url)
   }
 
+  getAllSavedMovies(userId: string): Observable<any> {
+    const url = `${environment.userMoviesBaseUrl}/v1/user/movies/findsavedmovies/${userId}`
+
+    return this.http.get<Array<UserMovies>>(url)
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

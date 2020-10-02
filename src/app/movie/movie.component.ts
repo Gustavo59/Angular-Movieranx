@@ -17,7 +17,6 @@ export class MovieComponent implements OnInit {
   overview;
   posterPath;
   year;
-  public watched: boolean = false;
 
   userMovies = <UserMovies>{};
 
@@ -34,14 +33,15 @@ export class MovieComponent implements OnInit {
     var canActivate = this.routeGuard.canActivate()
 
     if (canActivate) {
-      if (this.watched) {
-        this.watched = false
+      if (this.userMovies.watched) {
+        this.userMovies.watched = false
         this.userMovies.favorite = false
         this.userMovies.rating = 0
 
         this.deleteMovieRating()
       } else {
-        this.watched = true
+        this.userMovies.watched = true
+        this.userMovies.saved = false
 
         this.sendMovieRate()
       }
@@ -59,11 +59,12 @@ export class MovieComponent implements OnInit {
         this.updateMovieRating()
       } else {
         this.userMovies.favorite = true
+        this.userMovies.saved = false
 
-        if (this.watched) {
+        if (this.userMovies.watched) {
           this.updateMovieRating()
         } else {
-          this.watched = true
+          this.userMovies.watched = true
 
           this.sendMovieRate()
         }
@@ -75,13 +76,34 @@ export class MovieComponent implements OnInit {
     var canActivate = this.routeGuard.canActivate()
 
     if (canActivate) {
-      if (this.watched) {
+      if (this.userMovies.watched) {
         this.updateMovieRating()
 
       } else {
-        this.watched = true
+        this.userMovies.watched = true
+        this.userMovies.saved = false
 
         this.sendMovieRate()
+      }
+    }
+  }
+
+  saveMovie() {
+    var canActivate = this.routeGuard.canActivate()
+
+    if (canActivate) {
+      if (this.userMovies.saved) {
+        this.userMovies.saved = false
+
+        this.updateMovieRating()
+      } else {
+        this.userMovies.saved = true
+
+        if (this.userMovies.watched) {
+          this.updateMovieRating()
+        } else {
+          this.sendMovieRate()
+        }
       }
     }
   }
@@ -107,10 +129,11 @@ export class MovieComponent implements OnInit {
             .subscribe(
               res => {
                 if (res != null) {
+                  this.userMovies.watched = res.watched
                   this.userMovies.favorite = res.favorite
                   this.userMovies.rating = res.rating
-                  this.watched = true
                   this.userMovies.id = res.id
+                  this.userMovies.saved = res.saved
                 }
               }, error => {
                 console.log(error)
