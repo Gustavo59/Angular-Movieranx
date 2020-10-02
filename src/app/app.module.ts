@@ -33,7 +33,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { WatchedMoviesComponent } from './watched-movies/watched-movies.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { SavedMoviesComponent } from './saved-movies/saved-movies.component'
+import { SavedMoviesComponent } from './saved-movies/saved-movies.component';
+import { RecommendedMoviesComponent } from './recommended-movies/recommended-movies.component'
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { SavedMoviesComponent } from './saved-movies/saved-movies.component'
     SearchMovieComponent,
     EditProfileComponent,
     WatchedMoviesComponent,
-    SavedMoviesComponent
+    SavedMoviesComponent,
+    RecommendedMoviesComponent
   ],
   imports: [
     BrowserModule,

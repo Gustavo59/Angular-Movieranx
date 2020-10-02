@@ -10,6 +10,7 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { WatchedMoviesComponent } from './watched-movies/watched-movies.component';
 import { RouteGuardService } from './service/route-guard.service'
 import { SavedMoviesComponent } from './saved-movies/saved-movies.component';
+import { RecommendedMoviesComponent } from './recommended-movies/recommended-movies.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: ':username/profile/edit', component: EditProfileComponent, canActivate: [RouteGuardService] },
   { path: ':username/movies/watched', component: WatchedMoviesComponent, canActivate: [RouteGuardService] },
   { path: ':username/movies/saved', component: SavedMoviesComponent, canActivate: [RouteGuardService] },
+  { path: ':username/movies/recommended', component: RecommendedMoviesComponent, canActivate: [RouteGuardService] },
   { path: '**', component: ErrorComponent }
 ];
 
