@@ -12,8 +12,6 @@ import { MoviesService } from '../service/movies.service';
 })
 export class SearchMovieComponent implements OnInit {
 
-  filmes:Movie[] = null;
-  filmesEmiiter$ = new BehaviorSubject<Movie[]>(this.filmes);
 
   constructor(
     private moviesService: MoviesService,
@@ -22,24 +20,35 @@ export class SearchMovieComponent implements OnInit {
   ) {
   }
 
+  public name1 = "antes";
+  public name2 = "antes";
+  
+
+  @Input('movies-returned') filmes:Movie[];
+  @Input("search-term") term :string;
+
   ngOnInit() {
+    this.route.queryParams.subscribe(params=>{
+      let term = params.term
+      try{ 
+        term = term.replace(/ /g, "-")
+         this.moviesService.findMoviesByTerm(term).then(
+        data =>{
+        console.log(data)
+        this.filmes = data
+        return data
+      })
+      }catch(e){
+        console.log(e)
+      }
+  
+
+
+    })
   }
 
-  serchMovie(term) {
-    console.log("searching")
-    this.router.navigate(['search'])
-
-    term = term.replace(/ /g, "-")
-    console.log(term)
-    this.moviesService.findMoviesByTerm(term).subscribe(resp=>{
-      console.log(resp)
-
-      for(let filme of resp){
-        console.log(filme.original_title)
-      }
-      this.filmes = resp
-      this.filmesEmiiter$.next(this.filmes)
-    })
-
+  async serchMovie(term:string) { 
+  
+ 
   }
 }

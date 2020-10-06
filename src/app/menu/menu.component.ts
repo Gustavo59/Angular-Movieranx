@@ -16,12 +16,15 @@ export class MenuComponent implements OnInit {
 
   public isLogged: boolean;
 
+
   movieName: string = '';
+
+  @Output() searchEvent = new EventEmitter();
 
   constructor(
     public authenticationService: AuthenticationService,
     private sessionService: SessionService,
-    private route: Router,
+    private router: Router,
     private searchMovieComponent: SearchMovieComponent
   ) { }
 
@@ -31,6 +34,7 @@ export class MenuComponent implements OnInit {
 
   searchMovie(searchMovieForm: NgForm) {
       this.searchMovieComponent.serchMovie(searchMovieForm.value.movieName);
+      this.router.navigate(['search'],{ queryParams: { term: searchMovieForm.value.movieName } })
   }
 
   toggleNavbar() {
@@ -48,7 +52,7 @@ export class MenuComponent implements OnInit {
   logout() {
     this.sessionService.logout();
     location.reload();
-    this.route.navigate(['']);
+    this.router.navigate(['']);
   }
 
 }
