@@ -1,29 +1,34 @@
 <div class="container">
   <div class="columns is-mobile is-centered">
-    <div class="column is-half" id="form_col">
+    <div class="column" id="form_col">
       <form [formGroup]="userForm" autocomplete="off" (ngSubmit)="onSubmit()" class="my-form">
         <div class="field form-group">
-          <label class="label">Nome</label>
+          <label class="label">First Name</label>
           <div class="control">
-            <input class="input form-control" type="text" formControlName="firstName" placeholder="Nome" required>
+            <input class="input form-control" #firstName type="text" formControlName="firstName"
+              placeholder="First Name" required>
           </div>
         </div>
 
         <div class="field form-group">
-          <label class="label">Sobrenome</label>
+          <label class="label">Last Name</label>
           <div class="control">
-            <input class="input form-control" type="text" formControlName="lastName" placeholder="Sobrenome" required>
+            <input class="input form-control" #lastName type="text" formControlName="lastName" placeholder="Last Name"
+              required>
           </div>
         </div>
 
         <div class="field form-group">
-          <label class="label">Nome de Usuario</label>
+          <label class="label">Username</label>
           <div class="control has-icons-left">
-            <input class="input form-control" type="text" formControlName="username" placeholder="Nome de Usuario"
+            <input class="input form-control" #username type="text" formControlName="username" placeholder="Username"
               required>
             <span class="icon is-small is-left">
               <i class="fas fa-user"></i>
             </span>
+          </div>
+          <div *ngIf="!usernameValid">
+            <p class="help is-danger">Username must have more than 3 characters!</p>
           </div>
         </div>
 
@@ -36,51 +41,48 @@
             </span>
           </div>
           <div *ngIf="!emailValid">
-            <p class="help is-danger">Email inválido!</p>
+            <p class="help is-danger">Email Invalid!</p>
           </div>
         </div>
 
         <div class="field form-group">
-          <label class="label">Senha</label>
+          <label class="label">Password</label>
           <p class="control has-icons-left">
-            <input class="input form-control" #password type="password" placeholder="Senha" formControlName="password"
-              required>
+            <input class="input form-control" #password type="password" placeholder="Password"
+              formControlName="password" required>
             <span class="icon is-small is-left">
               <i class="fas fa-lock"></i>
             </span>
           </p>
           <div *ngIf="!equalPass">
-            <p class="help is-danger">As senhas precisam ser iguais!</p>
+            <p class="help is-danger">The passswords must be the same!</p>
           </div>
           <div *ngIf="!minLength">
-            <p class="help is-danger">A senha deve ter pelo menos 6 caracteres!</p>
+            <p class="help is-danger">The password musta have more than 6 characters!</p>
           </div>
         </div>
 
         <div class="field form-group">
-          <label class="label">Confirmar Senha</label>
+          <label class="label">Confirm Password</label>
           <p class="control has-icons-left">
-            <input class="input form-control" #confirmPassword type="password" placeholder="Confirmar Senha"
+            <input class="input form-control" #confirmPassword type="password" placeholder="Confirm Password"
               formControlName="confirmPassword" required>
             <span class="icon is-small is-left">
               <i class="fas fa-lock"></i>
             </span>
           </p>
           <div *ngIf="!equalPass">
-            <p class="help is-danger">As senhas precisam ser iguais!</p>
+            <p class="help is-danger">The passswords must be the same!</p>
           </div>
           <div *ngIf="!minLength">
-            <p class="help is-danger">A senha deve ter pelo menos 6 caracteres!</p>
+            <p class="help is-danger">The password musta have more than 6 characters!</p>
           </div>
         </div>
 
-        <div class="columns is-mobile is-centered">
-          <div class="column is-3">
-            <div class="field is-grouped">
-              <div class="control">
-                <button type="submit form-control" class="button is-success">Cadastrar</button>
-              </div>
-            </div>
+        <div class="columns is-mobile is-centered" id="update_btn_div"
+          style="width: 50%; margin: auto; text-align: center;">
+          <div class="column">
+            <button type="submit form-control" class="button is-success">Register</button>
           </div>
         </div>
       </form>
@@ -96,7 +98,7 @@
         <button class="delete" (click)="hideWarning('email')" aria-label="delete"></button>
       </div>
       <div class="message-body">
-        Este email já está cadastrado!
+        This email has already been registered!
       </div>
     </article>
   </div>
@@ -110,7 +112,7 @@
         <button class="delete" (click)="hideWarning('username')" aria-label="delete"></button>
       </div>
       <div class="message-body">
-        Este nome de usuário já está sendo utilizado!
+        This username has already been registered!
       </div>
     </article>
   </div>
@@ -124,7 +126,7 @@
         <button class="delete" (click)="hideWarning('login')" aria-label="delete"></button>
       </div>
       <div class="message-body">
-        Não foi possível realiar o login
+        It was not possible to login!
       </div>
     </article>
   </div>

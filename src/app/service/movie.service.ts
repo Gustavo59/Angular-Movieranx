@@ -14,7 +14,6 @@ export class MovieService {
   ) { }
 
   getMovieData(id: string): Observable<any> {
-    console.log(id)
     const url = `${environment.movieBaseUrl}/v1/movie/findbyid/${id}`;
     return this.http.get<Movie>(url);
   }

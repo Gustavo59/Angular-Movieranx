@@ -1,9 +1,47 @@
-.navbar-start a.navbar-item {
+.navbar-brand a.navbar-item {
   color: #00d1b2;
   font-weight: bold;
+  text-decoration: none;
 }
 
 #searchMovieInputDiv {
-  width: 30%;
+  width: 100%;
+  min-width: 400px;
   margin-top: 10px;
+}
+
+#user_dropdown a {
+  text-decoration: none;
+}
+
+#user_dropdown a.navbar-link:hover {
+  color: #00d1b2 !important;
+}
+
+#user_dropdown a.navbar-item:hover {
+  background-color: #00d1b263 !important;
+}
+
+.navbar-link:not(.is-arrowless)::after {
+  border-color: #00d1b2 !important;
+}
+
+@media only screen and (max-width: 1023px) {
+  .navbar-brand {
+    width: 100%;
+  }
+
+  #navbarExampleTransparentExample {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 769px) {
+  .navbar-brand {
+    width: 100%;
+  }
+
+  #navbarExampleTransparentExample {
+    width: 100%;
+  }
 }

@@ -1,0 +1,106 @@
+<div class="container">
+  <div class="columns is-mobile is-centered">
+    <div class="column" id="form_col">
+      <form [formGroup]="userForm" #firstName autocomplete="off" (ngSubmit)="onSubmit()" class="my-form">
+        <div class="field form-group">
+          <label class="label">Nome</label>
+          <div class="control">
+            <input class="input form-control" type="text" [ngModel]="user.firstName" formControlName="firstName"
+              placeholder="Nome" required>
+          </div>
+        </div>
+
+        <div class="field form-group">
+          <label class="label">Sobrenome</label>
+          <div class="control">
+            <input class="input form-control" #lastName type="text" [ngModel]="user.lastName" formControlName="lastName"
+              placeholder="Sobrenome" required>
+          </div>
+        </div>
+
+        <div class="field form-group">
+          <label class="label">Nome de Usuario</label>
+          <div class="control has-icons-left">
+            <input class="input form-control" #username type="text" [ngModel]="user.username" formControlName="username"
+              placeholder="Nome de Usuario" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-user"></i>
+            </span>
+            <div *ngIf="!usernameValid">
+              <p class="help is-danger">Username must have more than 3 characters!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="field form-group">
+          <label class="label">Email</label>
+          <div class="control has-icons-left">
+            <input class="input form-control" #email type="email" [ngModel]="user.email" placeholder="Email"
+              formControlName="email" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </div>
+          <div *ngIf="!emailValid">
+            <p class="help is-danger">Email inválido!</p>
+          </div>
+        </div>
+
+        <div class="field form-group">
+          <label class="label">Senha</label>
+          <p class="control has-icons-left">
+            <input class="input form-control" #password type="password" [ngModel]="user.password" placeholder="Senha"
+              formControlName="password" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+          <div *ngIf="!equalPass">
+            <p class="help is-danger">As senhas precisam ser iguais!</p>
+          </div>
+          <div *ngIf="!minLength">
+            <p class="help is-danger">A senha deve ter pelo menos 6 caracteres!</p>
+          </div>
+        </div>
+
+        <div class="field form-group">
+          <label class="label">Confirmar Senha</label>
+          <p class="control has-icons-left">
+            <input class="input form-control" #confirmPassword type="password" placeholder="Confirmar Senha"
+              formControlName="confirmPassword" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+          <div *ngIf="!equalPass">
+            <p class="help is-danger">As senhas precisam ser iguais!</p>
+          </div>
+          <div *ngIf="!minLength">
+            <p class="help is-danger">A senha deve ter pelo menos 6 caracteres!</p>
+          </div>
+        </div>
+
+        <div class="columns is-mobile is-centered" id="update_btn_div"
+          style="width: 50%; margin: auto; text-align: center;">
+          <div class="column">
+            <button type="submit form-control" class="button is-success">Atualizar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-5">
+    <article class="message is-danger" id="update_profile_error_notification" style="display: none;">
+      <div class="message-header">
+        <p>Error</p>
+        <button class="delete" (click)="hideWarning('update')" aria-label="delete"></button>
+      </div>
+      <div class="message-body">
+        Não foi possível atualizar as informações do seu perfil
+      </div>
+    </article>
+  </div>
+</div>

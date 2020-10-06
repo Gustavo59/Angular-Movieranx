@@ -8,9 +8,9 @@
 }
 
 @media only screen and (max-width: 770px) {
-  /* #update_btn_div {
+  #update_btn_div {
     width: 80%;
-  } */
+  }
 
   #form_col .form-group {
     width: 80%;

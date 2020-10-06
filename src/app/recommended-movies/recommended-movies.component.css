@@ -1,0 +1,84 @@
+.poster-list {
+  display: flex;
+  flex-wrap: wrap;
+  height: 600px;
+  overflow: auto;
+}
+
+.poster-list li {
+  width: 150px;
+}
+
+.poster-container {
+  margin: 0 0 10px 10px;
+}
+
+.poster-container img {
+  border-radius: 12px;
+}
+
+.poster-image:hover {
+  border: 2px solid #00d1b2;
+}
+
+ngb-pagination ::ng-deep .page-item.active .page-link {
+  background-color: #00d1b2 !important;
+  border-color: #00d1b2 !important;
+  color: white !important;
+}
+
+ngb-pagination ::ng-deep .page-link {
+  color: #00d1b2 !important;
+}
+
+ngb-pagination ::ng-deep .page-item.disabled .page-link {
+  color: #6c757d !important;
+}
+
+@media only screen and (max-width: 1400px) {
+  #pagination_div {
+    margin-top: 15px;
+  }
+}
+
+@media only screen and (max-width: 769px) {
+  .poster-container img {
+    width: 140px;
+  }
+
+  .poster-container {
+    width: 100px !important;
+    height: 180px !important;
+  }
+}
+
+@media only screen and (max-width: 490px) {
+  .poster-container img {
+    width: 100px;
+  }
+
+  .poster-container {
+    width: 100px !important;
+    height: 200px !important;
+  }
+
+  h2 {
+    font-size: 1.4em !important;
+  }
+
+  #user_movies_header {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 426px) {
+  .poster-container img {
+    width: 80px;
+  }
+
+  .poster-container {
+    width: 80px !important;
+    height: 130px !important;
+  }
+}

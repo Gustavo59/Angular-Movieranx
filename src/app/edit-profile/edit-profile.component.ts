@@ -1,18 +1,18 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthenticationService } from '../service/authentication.service';
-import { AlertService } from '../service/alert.service';
-import { RegisterService } from '../service/register.service';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { User } from '../interfaces/user';
+import { AuthenticationService } from '../service/authentication.service';
+import { ProfileService } from '../service/profile.service';
+import { RouteGuardService } from '../service/route-guard.service';
 import { SessionService } from '../service/session.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-edit-profile',
+  templateUrl: './edit-profile.component.html',
+  styleUrls: ['./edit-profile.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class EditProfileComponent implements OnInit {
   loading = false;
   submitted = false;
   userForm: FormGroup;
@@ -21,15 +21,15 @@ export class RegisterComponent implements OnInit {
   emailValid = true;
   usernameValid = true;
   registered = false;
+  loaded = false;
 
   constructor(
-    private router: Router,
+    private profileService: ProfileService,
     private authenticationService: AuthenticationService,
-    private registerService: RegisterService,
-    private alertService: AlertService,
-    private sessionService: SessionService
+    private session: SessionService,
+    private routeGuard: RouteGuardService,
+    private route: ActivatedRoute
   ) {
-    this.userForm = this.createUserForm();
   }
 
   @Input() user: User = <User>{};
@@ -39,6 +39,18 @@ export class RegisterComponent implements OnInit {
   @ViewChild('username') usernameElement: ElementRef;
   @ViewChild('firstName') firstNameElement: ElementRef;
   @ViewChild('lastName') lastNameElement: ElementRef;
+
+  ngOnInit() {
+    this.routeGuard.canAccess(this.route.snapshot.paramMap.get('username'))
+
+    this.authenticationService.getUserData(this.session.userId)
+      .subscribe(data => {
+        this.user = data;
+        this.loaded = true;
+      });
+
+    this.userForm = this.createUserForm();
+  }
 
   createUserForm() {
     return new FormGroup({
@@ -51,76 +63,7 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    if (this.sessionService.getUserLogged() != null) {
-      return this.router.navigate(['home']);
-    }
-  }
-
-  redirectToLogin() {
-    this.router.navigate(['']);
-  }
-
-  hideWarning(warning) {
-    if (warning == "username") {
-      (document.querySelector('#username_registered_notification') as HTMLElement).style.display = 'none';
-    } else if (warning == "email") {
-      (document.querySelector('#email_registered_notification') as HTMLElement).style.display = 'none';
-    } else if (warning == "login") {
-      (document.querySelector('#login_error_notification') as HTMLElement).style.display = 'none';
-    }
-  }
-
-  onSubmit() {
-    this.loading = true;
-    this.user = this.userForm.value;
-    this.user.active = true;
-
-    this.validateForm()
-
-    if (this.equalPass && this.minLength && this.userForm.valid) {
-      this.registerService.register(this.user).subscribe(
-        (res: any) => {
-          this.login(this.user.username, this.user.password);
-        },
-        (err: any) => {
-          this.loading = false;
-          console.log(err);
-
-          if (err.message === "EMAIL_ALREADY_REGISTERED") {
-            (document.querySelector('#email_registered_notification') as HTMLElement).style.display = 'block';
-
-            this.emailElement.nativeElement.classList.add('is-danger');
-            this.emailElement.nativeElement.classList.remove('is-success');
-          } else if (err.message === "USERNAME_ALREADY_REGISTERED") {
-            (document.querySelector('#username_registered_notification') as HTMLElement).style.display = 'block';
-          }
-        }
-      )
-    }
-  }
-
-  private login(login: string, password: string) {
-    this.authenticationService.login(login, password).subscribe(
-      resp => {
-        this.loading = false;
-        this.sessionService.saveUserLoggedId(resp.id, resp.username);
-        this.router.navigate(['home']);
-      },
-      error => {
-        this.loading = false;
-        console.log(error);
-
-        (document.querySelector('#login_error_notification') as HTMLElement).style.display = 'block';
-
-        this.router.navigate([''])
-      }
-    )
-  }
-
   validateForm() {
-
-    console.log(this.userForm)
 
     if (this.userForm.value.password != null) {
       this.equalPass = this.userForm.value.password === this.userForm.value.confirmPassword;
@@ -175,6 +118,7 @@ export class RegisterComponent implements OnInit {
 
         this.usernameElement.nativeElement.classList.remove('is-success');
         this.usernameElement.nativeElement.classList.add('is-danger');
+
       } else {
         this.usernameValid = true;
 
@@ -207,6 +151,36 @@ export class RegisterComponent implements OnInit {
       }
     } else {
       this.lastNameElement.nativeElement.classList.add('is-danger');
+    }
+  }
+
+  hideWarning(warning) {
+    if (warning == "update") {
+      (document.querySelector('#update_profile_error_notification') as HTMLElement).style.display = 'none';
+    }
+  }
+
+  onSubmit() {
+    this.loading = true;
+    this.user = this.userForm.value;
+    this.user.active = true;
+
+    this.validateForm()
+
+    if (this.equalPass && this.minLength && this.userForm.valid) {
+      this.profileService.updateProfile(this.user).subscribe(
+        (res: any) => {
+          console.log("Atualizado com sucesso!")
+          this.loading = true;
+        },
+        (err: any) => {
+          this.loading = false;
+          console.log("Erro ao atualizar perfil")
+          console.log(err);
+
+          (document.querySelector('#update_profile_error_notification') as HTMLElement).style.display = 'block';
+        }
+      )
     }
   }
 

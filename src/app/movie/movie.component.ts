@@ -3,6 +3,7 @@ import { MovieService } from '../service/movie.service';
 import { UserMoviesService } from '../service/user-movies.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserMovies } from '../interfaces/userMovies';
+import { RouteGuardService } from '../service/route-guard.service';
 
 @Component({
   selector: 'app-movie',
@@ -15,7 +16,7 @@ export class MovieComponent implements OnInit {
   genres;
   overview;
   posterPath;
-  public watched: boolean = false;
+  year;
 
   userMovies = <UserMovies>{};
 
@@ -23,57 +24,92 @@ export class MovieComponent implements OnInit {
   constructor(
     private movieService: MovieService,
     private route: ActivatedRoute,
-    private userMoviesService: UserMoviesService
+    private userMoviesService: UserMoviesService,
+    private routeGuard: RouteGuardService
   ) {
   }
 
   watchMovie() {
-    if (this.watched) {
-      this.watched = false
-      this.userMovies.favorite = false
-      this.userMovies.rating = 0
+    var canActivate = this.routeGuard.canActivate()
 
-      this.deleteMovieRating()
-    } else {
-      this.watched = true
+    if (canActivate) {
+      if (this.userMovies.watched) {
+        this.userMovies.watched = false
+        this.userMovies.favorite = false
+        this.userMovies.rating = 0
 
-      this.sendMovieRate()
-    }
-  }
-
-  favoriteMovie() {
-    if (this.userMovies.favorite) {
-      this.userMovies.favorite = false
-
-      this.updateMovieRating()
-    } else {
-      this.userMovies.favorite = true
-
-      if (this.watched) {
-        this.updateMovieRating()
+        this.deleteMovieRating()
       } else {
-        this.watched = true
+        this.userMovies.watched = true
+        this.userMovies.saved = false
 
         this.sendMovieRate()
       }
+    }
 
+  }
+
+  favoriteMovie() {
+    var canActivate = this.routeGuard.canActivate()
+
+    if (canActivate) {
+      if (this.userMovies.favorite) {
+        this.userMovies.favorite = false
+
+        this.updateMovieRating()
+      } else {
+        this.userMovies.favorite = true
+        this.userMovies.saved = false
+
+        if (this.userMovies.watched) {
+          this.updateMovieRating()
+        } else {
+          this.userMovies.watched = true
+
+          this.sendMovieRate()
+        }
+      }
     }
   }
 
   rateMovie() {
-    if (this.watched) {
-      this.updateMovieRating()
+    var canActivate = this.routeGuard.canActivate()
 
-    } else {
-      this.watched = true
+    if (canActivate) {
+      if (this.userMovies.watched) {
+        this.updateMovieRating()
 
-      this.sendMovieRate()
+      } else {
+        this.userMovies.watched = true
+        this.userMovies.saved = false
+
+        this.sendMovieRate()
+      }
     }
+  }
 
+  saveMovie() {
+    var canActivate = this.routeGuard.canActivate()
+
+    if (canActivate) {
+      if (this.userMovies.saved) {
+        this.userMovies.saved = false
+
+        this.updateMovieRating()
+      } else {
+        this.userMovies.saved = true
+
+        if (this.userMovies.watched) {
+          this.updateMovieRating()
+        } else {
+          this.sendMovieRate()
+        }
+      }
+    }
   }
 
   ngOnInit() {
-    this.userMovies.userId = localStorage.getItem("user");
+    this.userMovies.userId = localStorage.getItem("userId");
     this.userMovies.movieId = this.route.snapshot.paramMap.get('id');
 
     this.userMovies.rating = 0
@@ -81,21 +117,23 @@ export class MovieComponent implements OnInit {
     this.movieService.getMovieData(this.userMovies.movieId)
       .subscribe(
         res => {
-          console.log()
+          console.log(res)
 
           this.title = res.original_title
           this.genres = res.genres
           this.overview = res.overview
           this.posterPath = "https://image.tmdb.org/t/p/w200" + res.poster_path
+          this.year = res.release_date.slice(0, 4)
 
-          this.userMoviesService.getUserMovieRating(localStorage.getItem("user"), this.userMovies.movieId)
+          this.userMoviesService.getUserMovieRating(localStorage.getItem("userId"), this.userMovies.movieId)
             .subscribe(
               res => {
                 if (res != null) {
+                  this.userMovies.watched = res.watched
                   this.userMovies.favorite = res.favorite
                   this.userMovies.rating = res.rating
-                  this.watched = true
                   this.userMovies.id = res.id
+                  this.userMovies.saved = res.saved
                 }
               }, error => {
                 console.log(error)
@@ -113,7 +151,6 @@ export class MovieComponent implements OnInit {
     ).subscribe(
       res => {
         this.userMovies.id = res.id
-        console.log(res)
       }, error => {
         console.log(error)
       }
@@ -126,7 +163,6 @@ export class MovieComponent implements OnInit {
       this.userMovies.id
     ).subscribe(
       res => {
-        console.log(res)
       }, error => {
         console.log(error)
       }

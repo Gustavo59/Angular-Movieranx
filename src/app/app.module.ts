@@ -30,6 +30,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MovieComponent } from './movie/movie.component';
 import { SearchMovieComponent } from './search-movie/search-movie.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { WatchedMoviesComponent } from './watched-movies/watched-movies.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { SavedMoviesComponent } from './saved-movies/saved-movies.component';
+import { RecommendedMoviesComponent } from './recommended-movies/recommended-movies.component'
 
 @NgModule({
   declarations: [
@@ -41,7 +46,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RegisterComponent,
     HomeComponent,
     MovieComponent,
-    SearchMovieComponent
+    SearchMovieComponent,
+    EditProfileComponent,
+    WatchedMoviesComponent,
+    SavedMoviesComponent,
+    RecommendedMoviesComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +74,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FlexLayoutModule,
     MatSidenavModule,
     MatSnackBarModule,
-    NgbModule
+    NgbModule,
+    NgxPaginationModule
   ],
   providers: [
     SearchMovieComponent

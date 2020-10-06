@@ -7,19 +7,16 @@ import { Movie } from '../interfaces/movie';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent  implements OnInit{
-
-  
+export class HomeComponent implements OnInit {
   filmes: Movie[]
 
   constructor(
     private moviesService: MoviesService
   ) { }
 
-  ngOnInit(){
-    this.moviesService.getPopularMoviesByGenre("Comedy").subscribe(data =>{
+  ngOnInit() {
+    this.moviesService.getPopularMoviesByGenre("Comedy").subscribe(data => {
       this.filmes = data
-      console.log("http://image.tmdb.org/t/p/w200"+data[0].poster_path)
-    } ); 
+    });
   }
 }

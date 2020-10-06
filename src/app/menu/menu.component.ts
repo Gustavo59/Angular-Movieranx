@@ -18,6 +18,7 @@ export class MenuComponent implements OnInit {
 
 
   movieName: string = '';
+  username: string;
 
   @Output() searchEvent = new EventEmitter();
 
@@ -44,6 +45,7 @@ export class MenuComponent implements OnInit {
 
   userIsLogged() {
     if (this.sessionService.getUserLogged() != null) {
+      this.username = localStorage.getItem("username")
       return true;
     }
     return false;
