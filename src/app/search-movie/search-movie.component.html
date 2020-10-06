@@ -1,7 +1,7 @@
 <div class="container">
   <div class="columns is-mobile is-centered" id="user_movies_header" style="margin-top: 20px;">
     <div class="column has-text-centered">
-      <h2 style="font-weight: bold; font-size: 2em;">Search</h2>
+      <h2 style="font-weight: bold; font-size: 2em;">Search for ' {{movieSearched}} '</h2>
     </div>
   </div>
 
@@ -9,15 +9,34 @@
     <ul class="poster-list">
       <li class="poster-container"
         *ngFor="let i = index; let filme of filmes | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
-        <a [routerLink]="['/movie', filme.id]">
+        <!-- <a [routerLink]="['/movie', filme.id]">
           <img class="poster-image" width="150px" [src]="'http://image.tmdb.org/t/p/w200'+filme.poster_path"
             title="{{filme.original_title}} ({{filme.release_date.slice(0,4)}})">
-        </a>
+        </a> -->
+        <div [routerLink]="['/movie', filme.id]" class="card is-horizontal">
+          <div class="card-image" style="width: 150px;">
+            <figure class="image">
+              <img [src]="'http://image.tmdb.org/t/p/w200'+filme.poster_path" alt="Placeholder image">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4">{{filme.original_title}} <span
+                    id="release_year">{{filme.release_date.slice(0,4)}}</span></p>
+              </div>
+            </div>
+
+            <div class="content">
+              <p>{{filme.overview}}</p>
+            </div>
+          </div>
+        </div>
       </li>
     </ul>
   </div>
 
-  <div id="pagination_div" class="columns is-mobile is-centered">
+  <div id="pagination_div" class="columns is-mobile is-centered" style="margin-bottom: 100px; margin-top: 20px;">
     <ngb-pagination [(page)]="page" [pageSize]="pageSize" [maxSize]="10" [collectionSize]="filmes.length"
       [boundaryLinks]="true">
     </ngb-pagination>
