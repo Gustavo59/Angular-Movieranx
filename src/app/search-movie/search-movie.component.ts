@@ -1,4 +1,4 @@
-import { Component, Input, NgZone, OnInit } from '@angular/core';
+import { Component, HostListener, Input, NgZone, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -11,7 +11,10 @@ import { MoviesService } from '../service/movies.service';
   styleUrls: ['./search-movie.component.css']
 })
 export class SearchMovieComponent implements OnInit {
-
+  filmes: Movie[] = [];
+  page = 1;
+  pageSize = 16;
+  public innerWidth: any;
 
   constructor(
     private moviesService: MoviesService,
@@ -20,19 +23,34 @@ export class SearchMovieComponent implements OnInit {
   ) {
   }
 
-  public name1 = "antes";
-  public name2 = "antes";
+
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+    if (this.innerWidth <= 1600 && this.innerWidth >= 1410) {
+      this.pageSize = 16;
+    } else if (this.innerWidth < 1025 && this.innerWidth >= 992) {
+      this.pageSize = 10;
+    } else if (this.innerWidth < 992 && this.innerWidth >= 768) {
+      this.pageSize = 18;
+    } else if (this.innerWidth < 768 && this.innerWidth >= 425) {
+      this.pageSize = 16;
+    } else if (this.innerWidth < 425 && this.innerWidth >= 375) {
+      this.pageSize = 16;
+    } else if (this.innerWidth < 375) {
+      this.pageSize = 12;
+    }
+  }
   
 
-  @Input('movies-returned') filmes:Movie[];
-  @Input("search-term") term :string;
-
   ngOnInit() {
+    this.innerWidth = window.innerWidth;
     this.route.queryParams.subscribe(params=>{
       let term = params.term
       try{ 
         term = term.replace(/ /g, "-")
-         this.moviesService.findMoviesByTerm(term).then(
+        this.moviesService.findMoviesByTerm(term).then(
         data =>{
         console.log(data)
         this.filmes = data
@@ -41,8 +59,6 @@ export class SearchMovieComponent implements OnInit {
       }catch(e){
         console.log(e)
       }
-  
-
 
     })
   }

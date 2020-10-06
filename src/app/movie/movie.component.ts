@@ -115,13 +115,13 @@ export class MovieComponent implements OnInit {
     this.userMovies.rating = 0
 
     this.movieService.getMovieData(this.userMovies.movieId)
-      .subscribe(
+      .then(
         res => {
           console.log(res)
 
           this.title = res.original_title
           this.genres = res.genres
-          this.overview = res.overview
+          // this.overview = res.overview
           this.posterPath = "https://image.tmdb.org/t/p/w200" + res.poster_path
           this.year = res.release_date.slice(0, 4)
 

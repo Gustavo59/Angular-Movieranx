@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Movie } from '../interfaces/movie';
+import { Movie,  } from '../interfaces/movie';
+import { RecommendedMovie } from '../interfaces/recommendedMovie'
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -17,6 +18,13 @@ export class MoviesService {
     return this.http.get<Array<Movie>>(url).toPromise();
   
   }
+
+  getRecommendedMoviesByImdbId(imdbId:string){
+    const url = `${environment.recommendationBaseUrl}/api/get_top_ten/${imdbId}`;
+    return this.http.get<string[]>(url)
+  }
+
+
   getPopularMoviesByGenre(genre: string) {
     const url = `${environment.movieBaseUrl}/v1/movie/getTopMoviesByGenre/${genre}`;
     return this.http.get<Movie[]>(url)
@@ -25,6 +33,10 @@ export class MoviesService {
   getAllMoviesById(movies: string[]) {
     const url = `${environment.movieBaseUrl}/v1/movie/getmoviesbyid?movies=${movies}`;
 
+    return this.http.get<Movie[]>(url)
+  }
+  getAllMoviesByImdbId(movies: string[]) {
+    const url = `${environment.movieBaseUrl}/v1/movie/getmoviesbyimdbid?movies=${movies}`;
     return this.http.get<Movie[]>(url)
   }
 

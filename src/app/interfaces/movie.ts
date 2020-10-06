@@ -6,4 +6,5 @@ export interface Movie {
     revenue: string;
     genres: string;
     poster_path:string
+    imdb_id:string;
 }

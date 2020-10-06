@@ -13,9 +13,10 @@ export class MovieService {
     private http: HttpClient
   ) { }
 
-  getMovieData(id: string): Observable<any> {
+  async getMovieData(id: string) {
     const url = `${environment.movieBaseUrl}/v1/movie/findbyid/${id}`;
-    return this.http.get<Movie>(url);
+    let response = await this.http.get<Movie>(url).toPromise();
+    return response
   }
 
 
