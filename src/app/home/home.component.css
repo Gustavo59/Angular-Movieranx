@@ -14,10 +14,16 @@ h2 {
 
 #popular_movies_row img {
   min-width: 115px;
+  border-radius: 1em;
 }
 
 #popular_movies_row img:hover {
   border: 2px solid #00d1b2;
+}
+
+#popular_movies_row #movie_name {
+  margin-top: 10px;
+  font-size: 1.3em;
 }
 
 #popular_movies_row #movie_name a {
