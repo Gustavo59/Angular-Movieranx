@@ -7,4 +7,5 @@ export interface Movie {
     genres: string;
     poster_path:string
     imdb_id:string;
+    vote_average:number;
 }

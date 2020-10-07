@@ -48,26 +48,52 @@ export class RecommendedMoviesComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    function compare(a, b) {
+      console.log('dentro do compare');
+      const vote_avaregeA = a.vote_average;
+      const vote_avaregeB = b.vote_average;
+      let comparison = 0;
+      if (vote_avaregeA > vote_avaregeB) {
+        comparison = 1;
+      } else if (vote_avaregeA < vote_avaregeB) {
+        comparison = -1;
+      }
+      return comparison;
+    }
+
     this.innerWidth = window.innerWidth;
     this.routeGuard.canAccess(this.route.snapshot.paramMap.get('username'));
-    this.getImdbIds().then((imdbIds) => {
-      for (const imdbId of imdbIds) {
-        this.moviesService.getRecommendedMoviesByImdbId(imdbId).subscribe(
-          (res) => {  
 
-            let ids:string[] = Object.values(res).splice(0,5);
-            console.log(ids)
-            this.moviesService.getAllMoviesByImdbId(ids).subscribe((data)=>{
-              data.forEach(element => {
-                this.filmes.push(element)
+    let imdbIds = this.getImdbIds();
+    this.getMovies(imdbIds).then((movies)=>{
+      this.filmes = movies
+    });
+
+  }
+
+  async getMovies(imdbIds: Promise<string[]>): Promise<Movie[]> {
+    return new Promise(async (resolve) => {
+      let filmes: Movie[] = [];
+      await imdbIds.then((imdbIds) => {
+        for (const imdbId of imdbIds) {
+          console.log(imdbId)
+          this.moviesService.getRecommendedMoviesByImdbId(imdbId).subscribe(
+            (res) => {
+              let idsObject: string[] = Object.values(res['imdb_id']);
+              let ids: string[] = idsObject.splice(0, 5);
+              this.moviesService.getAllMoviesByImdbId(ids).subscribe((data) => {
+                data.forEach((element) => {
+                  filmes.push(element);
+                });
               });
-            })
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      }
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+          resolve(filmes);
+        }
+      });
     });
   }
 
