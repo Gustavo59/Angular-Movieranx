@@ -9,10 +9,6 @@
     <ul class="poster-list">
       <li class="poster-container"
         *ngFor="let i = index; let filme of filmes | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
-        <!-- <a [routerLink]="['/movie', filme.id]">
-          <img class="poster-image" width="150px" [src]="'http://image.tmdb.org/t/p/w200'+filme.poster_path"
-            title="{{filme.original_title}} ({{filme.release_date.slice(0,4)}})">
-        </a> -->
         <div [routerLink]="['/movie', filme.id]" class="card is-horizontal">
           <div class="card-image" style="width: 150px;">
             <figure class="image">

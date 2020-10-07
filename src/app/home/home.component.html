@@ -1,17 +1,81 @@
-<div class="container">
-  <div class="columns is-mobile is-centered" style="margin-top: 50px;">
-    <div class="column has-text-centered">
-      <h2>Popular Comedy Movies</h2>
-    </div>
-  </div>
+ <div class="container">
+   <div class="columns is-mobile is-centered" style="margin-top: 50px;">
+     <div class="column has-text-centered">
+       <h2>Popular Comedy Movies</h2>
+     </div>
+   </div>
 
-  <div class="columns is-mobile is-centered" id="popular_movies_row">
-    <div class="column has-text-centered" *ngFor="let filme of filmes">
-      <a [routerLink]="['/movie', filme.id]">
-        <img [src]="'http://image.tmdb.org/t/p/w200'+filme.poster_path"
-          title="{{filme.original_title}} ({{filme.year}})">
-      </a>
-      <p id="movie_name"><a [routerLink]="['/movie', filme.id]">{{filme.original_title}}</a></p>
-    </div>
-  </div>
-</div>
+   <div class="columns is-mobile is-centered" id="popular_movies_row">
+     <div class="column has-text-centered" *ngFor="let filme of comedyMovies">
+       <a [routerLink]="['/movie', filme.id]">
+         <img [src]="'http://image.tmdb.org/t/p/w200'+filme.poster_path"
+           title="{{filme.original_title}} ({{filme.release_date.slice(0,4)}})">
+       </a>
+       <p id="movie_name"><a [routerLink]="['/movie', filme.id]">{{filme.original_title}}</a></p>
+     </div>
+   </div>
+
+   <div class="columns is-mobile is-centered" style="margin-top: 200px;">
+     <div class="column has-text-centered">
+       <h2>Popular Horror Movies</h2>
+     </div>
+   </div>
+
+   <div class="columns is-mobile is-centered" id="popular_movies_row">
+     <div class="column has-text-centered" *ngFor="let filme of horrorMovies">
+       <a [routerLink]="['/movie', filme.id]">
+         <img [src]="'http://image.tmdb.org/t/p/w200'+filme.poster_path"
+           title="{{filme.original_title}} ({{filme.release_date.slice(0,4)}})">
+       </a>
+       <p id="movie_name"><a [routerLink]="['/movie', filme.id]">{{filme.original_title}}</a></p>
+     </div>
+   </div>
+
+   <div class="columns is-mobile is-centered" style="margin-top: 200px;">
+     <div class="column has-text-centered">
+       <h2>Popular Action Movies</h2>
+     </div>
+   </div>
+
+   <div class="columns is-mobile is-centered" id="popular_movies_row">
+     <div class="column has-text-centered" *ngFor="let filme of actionMovies">
+       <a [routerLink]="['/movie', filme.id]">
+         <img [src]="'http://image.tmdb.org/t/p/w200'+filme.poster_path"
+           title="{{filme.original_title}} ({{filme.release_date.slice(0,4)}})">
+       </a>
+       <p id="movie_name"><a [routerLink]="['/movie', filme.id]">{{filme.original_title}}</a></p>
+     </div>
+   </div>
+
+   <div class="columns is-mobile is-centered" style="margin-top: 200px;">
+     <div class="column has-text-centered">
+       <h2>Popular Romance Movies</h2>
+     </div>
+   </div>
+
+   <div class="columns is-mobile is-centered" id="popular_movies_row">
+     <div class="column has-text-centered" *ngFor="let filme of romanceMovies">
+       <a [routerLink]="['/movie', filme.id]">
+         <img [src]="'http://image.tmdb.org/t/p/w200'+filme.poster_path"
+           title="{{filme.original_title}} ({{filme.release_date.slice(0,4)}})">
+       </a>
+       <p id="movie_name"><a [routerLink]="['/movie', filme.id]">{{filme.original_title}}</a></p>
+     </div>
+   </div>
+
+   <div class="columns is-mobile is-centered" style="margin-top: 200px;">
+     <div class="column has-text-centered">
+       <h2>Popular Sci-fi Movies</h2>
+     </div>
+   </div>
+
+   <div class="columns is-mobile is-centered" id="popular_movies_row" style="margin-bottom: 100px;">
+     <div class="column has-text-centered" *ngFor="let filme of sciFiMovies">
+       <a [routerLink]="['/movie', filme.id]">
+         <img [src]="'http://image.tmdb.org/t/p/w200'+filme.poster_path"
+           title="{{filme.original_title}} ({{filme.release_date.slice(0,4)}})">
+       </a>
+       <p id="movie_name"><a [routerLink]="['/movie', filme.id]">{{filme.original_title}}</a></p>
+     </div>
+   </div>
+ </div>
