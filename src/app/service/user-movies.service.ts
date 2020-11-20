@@ -43,7 +43,7 @@ export class UserMoviesService {
     return this.http.delete<UserMovies>(url)
   }
 
-  getAllWatchedMovies(userId: string): Observable<any> {
+  getAllWatchedMovies(userId: string): Observable<UserMovies[]> {
     const url = `${environment.userMoviesBaseUrl}/v1/user/movies/findwatchedmovies/${userId}`
 
     return this.http.get<Array<UserMovies>>(url)

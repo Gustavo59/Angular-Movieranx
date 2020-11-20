@@ -8,4 +8,5 @@ export interface UserMovies {
     watchedDate: string;
     ratingUpdateDate: string;
     saved: boolean;
+    imdbId:string;
 }

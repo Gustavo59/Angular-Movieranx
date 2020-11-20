@@ -25,6 +25,12 @@ export class ProfileService {
     return this.http.put<User>(url, user, httpOptions);
   }
 
+  getAllUsers():Observable<User[]>{
+    const url = `${environment.userBaseUrl}/v1/user/listalluser/`;
+    return this.http.get<User[]>(url);
+
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

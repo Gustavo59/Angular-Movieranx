@@ -1,12 +1,17 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Movie } from '../interfaces/movie';
+import { User } from '../interfaces/user';
 import { MoviesService } from '../service/movies.service';
 import { MovieService } from '../service/movie.service';
 import { RouteGuardService } from '../service/route-guard.service';
 import { SessionService } from '../service/session.service';
 import { UserMoviesService } from '../service/user-movies.service';
+import { ProfileService } from '../service/profile.service';
+import { SimilarHighRatedMovie } from '../interfaces/similarHighRatedMovie';
 import { forkJoin } from 'rxjs';
+import { UserMovies } from '../interfaces/userMovies';
+import { async } from 'rxjs/internal/scheduler/async';
 
 @Component({
   selector: 'app-recommended-movies',
@@ -18,6 +23,9 @@ export class RecommendedMoviesComponent implements OnInit {
   page = 1;
   pageSize = 16;
   username = this.route.snapshot.paramMap.get('username');
+  currentUserWatchedMovies: UserMovies[] = [];
+  similarMovies: SimilarHighRatedMovie[] = [];
+  allSimilarUsersWatchedMovies: UserMovies[] = [];
   public innerWidth: any;
 
   @HostListener('window:resize', ['$event'])
@@ -44,31 +52,119 @@ export class RecommendedMoviesComponent implements OnInit {
     private userMoviesService: UserMoviesService,
     private session: SessionService,
     private route: ActivatedRoute,
-    private routeGuard: RouteGuardService
+    private routeGuard: RouteGuardService,
+    private profileService: ProfileService
   ) {}
 
   async ngOnInit() {
-    function compare(a, b) {
-      console.log('dentro do compare');
-      const vote_avaregeA = a.vote_average;
-      const vote_avaregeB = b.vote_average;
-      let comparison = 0;
-      if (vote_avaregeA > vote_avaregeB) {
-        comparison = 1;
-      } else if (vote_avaregeA < vote_avaregeB) {
-        comparison = -1;
-      }
-      return comparison;
-    }
-
     this.innerWidth = window.innerWidth;
     this.routeGuard.canAccess(this.route.snapshot.paramMap.get('username'));
 
     let imdbIds = this.getImdbIds();
-    this.getMovies(imdbIds).then((movies)=>{
-      this.filmes = movies
+    this.getMovies(imdbIds);
+    this.getMovies(imdbIds).then((movies) => {
+      this.filmes.push(...movies);
     });
 
+    // colaborative recommendation
+    this.userMoviesService
+      .getAllWatchedMovies(this.session.userId)
+      .subscribe((res) => {
+        this.currentUserWatchedMovies = res;
+        this.getCollaborativeRecommendationByMovies(
+          this.currentUserWatchedMovies
+        );
+      });
+  }
+
+  getCollaborativeRecommendationByMovies(movies: UserMovies[]): Movie[] {
+    let allSimilarHighRatedMovies: SimilarHighRatedMovie[] = [];
+    //console.log('Current user watched movies:', this.currentUserWatchedMovies)
+    this.getAllUsers().then((users) => {
+      users.forEach((user) => {
+        if (user.id != this.session.userId) {
+          let userToCheck: User = user;
+          this.getSimilarHighRatedMovies(
+            userToCheck,
+            this.currentUserWatchedMovies
+          ).then((res) => {
+            this.recommendColaborative();
+
+            let userMovies: UserMovies[] = [];
+            this.similarMovies.forEach((element) => {
+              userMovies.push(element.movie);
+            });
+          });
+        }
+      });
+    });
+    return;
+  }
+  recommendColaborative() {
+    this.allSimilarUsersWatchedMovies.forEach((movie) => {
+      this.movieService.getMovieData(movie.movieId).then((res) => {
+        let dupped = null;
+        this.filmes.forEach((recommendedMovie) => {
+          console.log(recommendedMovie, movie);
+          if (recommendedMovie.id == movie.movieId) {
+            dupped = true;
+          } else {
+            dupped = false;
+          }
+        });
+        if (movie.rating >= 7 && !dupped) {
+          console.log('res', res);
+          this.filmes.push(res);
+        }
+      });
+    });
+  }
+
+  async getSimilarHighRatedMovies(
+    userToCheck: User,
+    currentUserWatchedMovies: UserMovies[]
+  ): Promise<SimilarHighRatedMovie[]> {
+    let userToCheckSimilarMovies: SimilarHighRatedMovie[] = [];
+    return new Promise(async (resolve) => {
+      this.userMoviesService
+        .getAllWatchedMovies(userToCheck.id)
+        .subscribe((userToCheckWatchedMovies) => {
+          if (userToCheckWatchedMovies.length > 0) {
+            currentUserWatchedMovies.forEach((currentUserWatchedMovie) => {
+              userToCheckWatchedMovies.forEach((userToCheckWatchedMovie) => {
+                if (
+                  currentUserWatchedMovie.movieId ==
+                  userToCheckWatchedMovie.movieId
+                ) {
+                  userToCheckWatchedMovies.forEach((movie) => {
+                    this.allSimilarUsersWatchedMovies.push(movie);
+                  });
+                  userToCheckSimilarMovies.push({
+                    movie: userToCheckWatchedMovie,
+                    user: userToCheck,
+                  });
+                }
+              });
+            });
+          }
+          if (userToCheckSimilarMovies.length > 0) {
+            userToCheckSimilarMovies.forEach((element) => {
+              this.similarMovies.push(element);
+            });
+            resolve(userToCheckSimilarMovies);
+          }
+        });
+    });
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    return new Promise((resolve) => {
+      let allUsers: User[] = [];
+      this.profileService.getAllUsers().subscribe((res) => {
+        allUsers = res;
+        resolve(allUsers);
+      });
+    });
   }
 
   async getMovies(imdbIds: Promise<string[]>): Promise<Movie[]> {
@@ -76,7 +172,7 @@ export class RecommendedMoviesComponent implements OnInit {
       let filmes: Movie[] = [];
       await imdbIds.then((imdbIds) => {
         for (const imdbId of imdbIds) {
-          console.log(imdbId)
+          //console.log(imdbId)
           this.moviesService.getRecommendedMoviesByImdbId(imdbId).subscribe(
             (res) => {
               let idsObject: string[] = Object.values(res['imdb_id']);
@@ -85,15 +181,37 @@ export class RecommendedMoviesComponent implements OnInit {
                 data.forEach((element) => {
                   filmes.push(element);
                 });
+                resolve(filmes);
               });
             },
             (error) => {
               console.log(error);
             }
           );
-          resolve(filmes);
         }
       });
+    });
+  }
+
+  async getMoviesColaborative(imdbIds: string[]): Promise<Movie[]> {
+    return new Promise(async (resolve) => {
+      let filmes: Movie[] = [];
+      console.log(imdbIds);
+      for (const imdbId of imdbIds) {
+        this.moviesService.getRecommendedMoviesByImdbId(imdbId).subscribe(
+          (res) => {
+            let idsObject: string[] = Object.values(res['imdb_id']);
+            let ids: string[] = idsObject.splice(0, 3);
+            this.moviesService.getAllMoviesByImdbId(ids).subscribe((data) => {
+              console.log(data);
+            });
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+        resolve(filmes);
+      }
     });
   }
 
@@ -110,6 +228,19 @@ export class RecommendedMoviesComponent implements OnInit {
           }
           resolve(imdbIdList);
         });
+    });
+  }
+
+  async getImdbIdsColaborative(movies: UserMovies[]): Promise<string[]> {
+    let imdbIdList: string[] = [];
+    return new Promise((resolve) => {
+      for (const movie of movies) {
+        this.movieService.getMovieData(movie.movieId).then((data) => {
+          imdbIdList.push(data.imdb_id);
+          console.log(imdbIdList);
+        });
+      }
+      resolve(imdbIdList);
     });
   }
 }
